@@ -3,19 +3,13 @@ import profileImg from "../../public/IMG_20250524_165515.jpg";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import {
-  Menu,
-  X,
-  Sparkles,
-  Github,
-  Linkedin,
-  Mail,
-  Sun,
-  Moon,
-  Code,
-  Server,
-} from "lucide-react";
+  motion,
+  AnimatePresence,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
+import { Menu, X, Github, Linkedin, Mail, Sun, Moon, Code } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 
@@ -27,18 +21,31 @@ const navItems = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState<boolean>(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 20) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  });
 
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // useEffect(() => {
+  //   setMounted(true);
+  //   const handleScroll = () => setScrolled(window.scrollY > 10);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -48,11 +55,14 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className={`fixed max-w-5xl mx-auto top-4 left-4 right-4 z-50 rounded-2xl transition-all duration-500 ${
-        scrolled
-          ? "bg-background/90 backdrop-blur-xl border border-white/20 shadow-2xl shadow-primary/10"
-          : "bg-background/80 backdrop-blur-md border border-white/20"
-      }`}
+      className={`fixed max-w-5xl mx-auto left-4 right-4 z-50 rounded-2xl 
+    transition-all duration-500 
+    ${
+      scrolled
+        ? "bg-background/90 backdrop-blur-xl border border-white/20 shadow-2xl shadow-primary/10 top-3"
+        : "bg-transparent border border-transparent backdrop-blur-none shadow-none top-1"
+    }
+  `}
     >
       {/* Beams effect */}
       <div className="absolute inset-0 overflow-hidden rounded-2xl">
@@ -69,7 +79,13 @@ export default function Navbar() {
                 transition={{ duration: 1 }}
                 className="group-hover:from-primary/30 group-hover:to-purple-500/30"
               >
-                <Image className="w-12 h-12 rounded-full object-cover" src={profileImg} alt="profile" width={50} height={50} />
+                <Image
+                  className="w-12 h-12 rounded-full object-cover"
+                  src={profileImg}
+                  alt="profile"
+                  width={50}
+                  height={50}
+                />
               </motion.div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold font-mono text-[#06B6D4]">
