@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "**",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "github-profile-summary-cards.vercel.app",
+        pathname: "/**", // this is okay
+      },
     ],
   },
 };
