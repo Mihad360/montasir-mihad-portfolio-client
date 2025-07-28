@@ -239,21 +239,21 @@ const Banner = () => {
       </div>
 
       <motion.div
-        className="w-[500px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] absolute bottom-0 left-0 md:block hidden"
+        className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] rounded-full absolute bottom-0 left-0 md:block hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.2 }}
         transition={{ duration: 1, delay: 0.5 }}
       />
 
       <motion.div
-        className="w-[500px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] absolute bottom-[30%] left-1/2 transform -translate-x-1/2"
+        className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] rounded-full absolute bottom-[30%] left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.2 }}
         transition={{ duration: 1, delay: 0.7 }}
       />
 
       <motion.div
-        className="w-[500px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] absolute top-0 right-0 md:block hidden"
+        className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] rounded-full absolute top-0 right-0 md:block hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.2 }}
         transition={{ duration: 1, delay: 0.9 }}
