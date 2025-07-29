@@ -15,8 +15,8 @@ const ProjectCard = ({
 }) => {
   return (
     <Link
-      href={`${project.id}`}
-      key={project.id}
+      href={`${project?.id}`}
+      key={project?.id}
       className="bg-[#181A1E] border-none transition-all duration-300 hover:transform group/card overflow-hidden rounded-xl"
     >
       <MagicCard gradientColor={theme === "dark" ? "#3A3A3A" : "#D9D9D955"}>
@@ -30,10 +30,10 @@ const ProjectCard = ({
               width={600}
               height={600}
               src={
-                project.image ||
+                project?.image ||
                 "https://images.unsplash.com/photo-1559827260-dc66d52bef19?q=80&w=2070&auto=format&fit=crop"
               }
-              alt={project.title}
+              alt={project?.title}
               className="w-full h-48 object-cover rounded-xl transition-transform duration-500"
             />
           </div>
@@ -41,10 +41,10 @@ const ProjectCard = ({
 
         <div className="px-5 pb-3">
           <CardTitle className="text-white text-xl transition-colors">
-            {project.title}
+            {project?.title}
           </CardTitle>
           <CardDescription className="text-gray-400 line-clamp-2">
-            {project.description}
+            {project?.description}
           </CardDescription>
         </div>
 
@@ -54,7 +54,7 @@ const ProjectCard = ({
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
-                <span>{new Date(project.date).toLocaleDateString()}</span>
+                <span>{new Date(project?.date).toLocaleDateString()}</span>
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@ const ProjectCard = ({
           {/* Technologies */}
           <div className="pb-5">
             <div className="flex flex-wrap gap-2">
-              {project.technologies
+              {project?.technologies
                 .slice(0, 3)
                 .map((tech: string, index: number) => (
                   <Badge

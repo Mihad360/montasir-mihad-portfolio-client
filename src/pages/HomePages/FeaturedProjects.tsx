@@ -1,7 +1,7 @@
 import { Timeline, TimelineCard } from "@/components/reUse/Timeline";
 import React from "react";
 
-export function FeaturedProjects() {
+function FeaturedProjects() {
   const timelineData = [
     {
       title: "2024",
@@ -53,3 +53,5 @@ export function FeaturedProjects() {
     </div>
   );
 }
+
+export default FeaturedProjects;
