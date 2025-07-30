@@ -124,13 +124,15 @@ const Banner = () => {
               </motion.span>
 
               <motion.div
-                className="relative w-48 h-48"
-                variants={floating}
-                initial="initial"
-                animate="animate"
+                className="relative w-40 h-40 flex items-center justify-center"
               >
-                {/* Circular Text */}
-                <motion.div variants={spin} initial="initial" animate="animate">
+                {/* Spinning Circular Text */}
+                <motion.div
+                  className="absolute inset-0"
+                  variants={spin}
+                  initial="initial"
+                  animate="animate"
+                >
                   {letters.map((letter, index) => (
                     <motion.span
                       key={index}
@@ -140,13 +142,13 @@ const Banner = () => {
                         top: "50%",
                         transform: `rotate(${
                           (index * 360) / letters.length
-                        }deg) translate(0, -70px)`,
+                        }deg) translate(0, -80px)`,
                         transformOrigin: "0 0",
                       }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{
-                        duration: 0.3,
+                        duration: 0.2,
                         delay: index * 0.05 + 0.5,
                       }}
                     >
@@ -193,16 +195,16 @@ const Banner = () => {
         </motion.div>
       </div>
 
-      <div className="md:hidden items-center justify-center flex">
+      <div className="md:hidden flex items-center justify-center">
         <motion.div
-          className="relative w-48 h-48"
+          className="relative w-48 h-48 flex items-center justify-center"
           variants={floating}
           initial="initial"
           animate="animate"
         >
           {/* Circular Spinning Text */}
           <motion.div
-            className="absolute inset-0 origin-center"
+            className="absolute inset-0"
             variants={spin}
             initial="initial"
             animate="animate"
@@ -216,7 +218,7 @@ const Banner = () => {
                   top: "50%",
                   transform: `rotate(${
                     (index * 360) / letters.length
-                  }deg) translate(0, -70px)`,
+                  }deg) translate(0, -85px)`,
                   transformOrigin: "0 0",
                 }}
                 initial={{ opacity: 0 }}
@@ -231,7 +233,7 @@ const Banner = () => {
             ))}
           </motion.div>
 
-          {/* ✅ Keep Arrow Fixed */}
+          {/* Center Arrow */}
           <div className="absolute inset-0 flex items-center justify-center">
             <ChevronDown className="w-6 h-6 text-white" />
           </div>

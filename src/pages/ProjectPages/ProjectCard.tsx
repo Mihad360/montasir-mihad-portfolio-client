@@ -15,7 +15,7 @@ const ProjectCard = ({
 }) => {
   return (
     <Link
-      href={`${project?.id}`}
+      href={`/projects/${project?.id}`}
       key={project?.id}
       className="bg-[#181A1E] border-none transition-all duration-300 hover:transform group/card overflow-hidden rounded-xl"
     >

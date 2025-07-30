@@ -48,7 +48,7 @@ const Projects = () => {
         </h2>
 
         {/* Search and Filter Section */}
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 mb-8">
+        <div className="bg-[#181A1E] rounded-2xl p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
             <div className="md:col-span-2">
               <div className="relative">
@@ -56,7 +56,7 @@ const Projects = () => {
                 <Input
                   type="text"
                   placeholder="Search by title, description, or technology..."
-                  className="pl-9 bg-gray-900/50 border-gray-600 text-white placeholder:text-gray-500"
+                  className="pl-9 cursor-pointer border border-gray-600 focus-visible:ring-0 focus-visible:border-gray-500 text-white placeholder:text-gray-500"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -67,15 +67,19 @@ const Projects = () => {
                 value={selectedTechnology}
                 onValueChange={setSelectedTechnology}
               >
-                <SelectTrigger className="bg-gray-900/50 border-gray-600 text-white">
+                <SelectTrigger className="border-gray-600 text-white focus-visible:ring-0 cursor-pointer">
                   <div className="flex items-center gap-2">
                     <Filter className="w-4 h-4 text-gray-400" />
                     <SelectValue placeholder="Select technology" />
                   </div>
                 </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-600 text-white">
+                <SelectContent className="bg-[#181A1E] border-none z-10 border-gray-600 text-white">
                   {technologyOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem
+                      className="cursor-pointer  hover:bg-white/20"
+                      key={option.value}
+                      value={option.value}
+                    >
                       {option.label}
                     </SelectItem>
                   ))}
@@ -88,9 +92,9 @@ const Projects = () => {
                 variant="outline"
                 size="icon"
                 onClick={clearFilters}
-                className="bg-gray-900/50 border-gray-600 hover:bg-gray-700 text-gray-300"
+                className="bg-rose-500 hover:bg-rose-400 border-none text-gray-300 cursor-pointer text-3xl"
               >
-                <X className="w-4 h-4" />
+                <X className="" />
               </Button>
             </div>
           </div>
