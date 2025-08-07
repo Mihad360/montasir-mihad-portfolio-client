@@ -8,6 +8,7 @@ import { ArrowRight, MailsIcon } from "lucide-react";
 import { BsGithub } from "react-icons/bs";
 import { motion, Variants } from "framer-motion";
 import { LiaLinkedin } from "react-icons/lia";
+import { VelocityScroll } from "@/components/reUse/TextMarquee";
 
 const AboutBanner = () => {
   // Animation variants
@@ -46,6 +47,12 @@ const AboutBanner = () => {
         <div className="w-[70%] mr-6">
           <motion.div
             className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] absolute top-16 left-10 z-0 md:block hidden rounded-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.3 }}
+            transition={{ duration: 1.2, delay: 0.4, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="w-[250px] h-[250px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] fixed top-2/3 right-10 z-0 md:block hidden rounded-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.3 }}
             transition={{ duration: 1.2, delay: 0.4, ease: "easeInOut" }}
@@ -119,18 +126,25 @@ const AboutBanner = () => {
           </motion.div>
         </div>
         <motion.div
-          className="w-[30%]"
+          className="w-[30%] z-10"
           variants={imageAnimation}
           initial="hidden"
           animate="show"
         >
           <Image
             src={aboutImage}
-            className="rounded-xl h-[450px] object-cover"
+            className="rounded-xl h-[350px] object-cover"
             alt="about image"
             width={1000}
-            height={1200}
+            height={1000}
           />
+          <div className="relative flex w-full flex-col items-center justify-center overflow-hidden mt-3">
+            <VelocityScroll>
+             | Full Stack Developer | MERN Stack Developer
+            </VelocityScroll>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
+          </div>
         </motion.div>
       </div>
     </div>

@@ -116,7 +116,7 @@ const AboutProfessionalSection = () => {
 
         {/* Education */}
         <motion.div
-          className="md:w-1/2"
+          className="md:w-1/2 z-20"
           initial="hidden"
           animate="show"
           variants={container}
@@ -139,30 +139,29 @@ const AboutProfessionalSection = () => {
               </motion.li>
             ))}
           </ul>
-        {/* Professional Development */}
-        <motion.div
-          className="mt-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <h3 className="text-xl font-semibold mb-4 border-l-4 border-[#06B6D4] pl-4">
-            Professional Development
-          </h3>
-          <motion.a
-            href="#"
-            className="flex items-center gap-2 text-[#06B6D4] hover:underline"
-            whileHover={{ scale: 1.02 }}
+          {/* Professional Development */}
+          <motion.div
+            className="mt-8 z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
           >
-            <FaCertificate /> View Certifications
-          </motion.a>
-          <p className="text-sm mt-2 text-gray-300">
-            Continuously upgrading skills through online courses and hands-on
-            projects.
-          </p>
+            <h3 className="text-xl font-semibold mb-4 border-l-4 border-[#06B6D4] pl-4">
+              Professional Development
+            </h3>
+            <motion.a
+              href="#"
+              className="flex items-center gap-2 text-[#06B6D4] hover:underline"
+              whileHover={{ scale: 1.02 }}
+            >
+              <FaCertificate /> View Certifications
+            </motion.a>
+            <p className="text-sm mt-2 text-gray-300">
+              Continuously upgrading skills through online courses and hands-on
+              projects.
+            </p>
+          </motion.div>
         </motion.div>
-        </motion.div>
-
       </div>
 
       {/* Fun Facts and GitHub Row */}
@@ -195,7 +194,7 @@ const AboutProfessionalSection = () => {
 
         {/* GitHub Stats */}
         <motion.div
-          className=""
+          className="z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}

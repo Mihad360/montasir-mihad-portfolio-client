@@ -20,6 +20,7 @@ import { Lens } from "./Lens";
 import AnimateButton from "./AnimateButton";
 import { ExternalLink, Eye } from "lucide-react";
 import Link from "next/link";
+import { ShimmerButton } from "./ShimmerButton";
 
 interface TimelineEntry {
   title: string;
@@ -254,11 +255,11 @@ export const TimelineCard = ({
           variants={contentVariants}
           className="px-6 pb-6 space-x-4 flex"
         >
-          <AnimateButton
-            icon={<ExternalLink className="text-gray-500 w-5" />}
-            text="Live Link"
-            className="text-base font-medium w-20"
-          ></AnimateButton>
+          <ShimmerButton className="shadow-2xl">
+            <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
+              Live Link
+            </span>
+          </ShimmerButton>
           <Link href="/about">
             <Button
               variant="secondary"
