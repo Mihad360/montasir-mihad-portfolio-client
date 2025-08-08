@@ -5,7 +5,6 @@ import { motion, Variants } from "framer-motion";
 import { useState, useEffect } from "react";
 import { AuroraText } from "@/components/reUse/AnimateText";
 import {
-  AnimatedSpan,
   Terminal,
   TypingAnimation,
 } from "@/components/reUse/Terminal";
@@ -72,7 +71,7 @@ const Banner = () => {
       transition={{ duration: 0.5 }}
     >
       {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] max-w-7xl mx-auto"></div>
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] max-w-7xl mx-auto mt-16"></div>
 
       {/* Main Content Container */}
       <div className="max-w-5xl mx-auto">
