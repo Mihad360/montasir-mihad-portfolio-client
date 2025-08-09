@@ -4,37 +4,39 @@ import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Select, Form } from "antd";
 
-type TSelectOption = {
+type OptionType = {
   label: string;
   value: string;
 };
 
-type TEBSelect = {
-  options: TSelectOption[];
+type EBSelectMultipleProps = {
   name: string;
   label?: string;
+  options: OptionType[];
   disabled?: boolean;
   placeholder?: string;
+  mode: "multiple" | "tags";
   className?: string;
-  defaultValue?: string;
+  defaultValue?: string[];
 };
 
-const PSelect = ({
-  options,
+const PSelectMultiple = ({
   name,
   label,
+  options,
   disabled,
-  placeholder,
+  placeholder = "Please select",
+  mode,
   className,
   defaultValue,
-}: TEBSelect) => {
+}: EBSelectMultipleProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
       name={name}
       control={control}
-      defaultValue={defaultValue || ""}
+      defaultValue={defaultValue || []}
       render={({ field, fieldState }) => (
         <Form.Item
           label={label}
@@ -44,15 +46,15 @@ const PSelect = ({
         >
           <Select
             {...field}
-            onChange={field.onChange}
-            value={field.value}
-            disabled={disabled}
-            placeholder={placeholder || "Select"}
-            options={options}
+            mode={mode}
             allowClear
+            disabled={disabled}
+            placeholder={placeholder}
+            options={options}
             style={{ width: "100%" }}
-            getPopupContainer={(trigger) =>
-              trigger.parentElement || document.body
+            onChange={(value) => field.onChange(value)}
+            getPopupContainer={(triggerNode) =>
+              triggerNode.parentElement || document.body
             }
           />
         </Form.Item>
@@ -61,4 +63,4 @@ const PSelect = ({
   );
 };
 
-export default PSelect;
+export default PSelectMultiple;

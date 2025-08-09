@@ -2,39 +2,32 @@
 
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Select, Form } from "antd";
+import { TimePicker, Form } from "antd";
+import dayjs from "dayjs";
 
-type TSelectOption = {
-  label: string;
-  value: string;
-};
-
-type TEBSelect = {
-  options: TSelectOption[];
+type TTimePickerProps = {
   name: string;
   label?: string;
   disabled?: boolean;
-  placeholder?: string;
   className?: string;
-  defaultValue?: string;
+  defaultValue?: string | dayjs.Dayjs;
 };
 
-const PSelect = ({
-  options,
+const PTimePicker = ({
   name,
   label,
   disabled,
-  placeholder,
   className,
   defaultValue,
-}: TEBSelect) => {
+}: TTimePickerProps) => {
   const { control } = useFormContext();
+  const format = "HH:mm";
 
   return (
     <Controller
       name={name}
       control={control}
-      defaultValue={defaultValue || ""}
+      defaultValue={defaultValue ? dayjs(defaultValue, format) : null}
       render={({ field, fieldState }) => (
         <Form.Item
           label={label}
@@ -42,18 +35,15 @@ const PSelect = ({
           help={fieldState.error?.message}
           className={className}
         >
-          <Select
+          <TimePicker
             {...field}
-            onChange={field.onChange}
-            value={field.value}
-            disabled={disabled}
-            placeholder={placeholder || "Select"}
-            options={options}
-            allowClear
+            format={format}
+            size="middle"
             style={{ width: "100%" }}
-            getPopupContainer={(trigger) =>
-              trigger.parentElement || document.body
-            }
+            disabled={disabled}
+            onChange={(time) => field.onChange(time)}
+            value={field.value}
+            placeholder={label ? `Enter your ${label}` : undefined}
           />
         </Form.Item>
       )}
@@ -61,4 +51,4 @@ const PSelect = ({
   );
 };
 
-export default PSelect;
+export default PTimePicker;

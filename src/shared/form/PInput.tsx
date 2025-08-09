@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useFormContext } from "react-hook-form";
+import React from "react";
+import { Input, Form } from "antd";
+import { useFormContext, Controller } from "react-hook-form";
 import { ReactNode } from "react";
 
 export type EBInputType = {
@@ -14,9 +13,9 @@ export type EBInputType = {
   placeholder?: string;
   className?: string;
   defaultValue?: string;
-  readOnly?: any;
+  readOnly?: boolean;
   rows?: number;
-  tabIndex?: any;
+  tabIndex?: number;
 };
 
 const PInput = ({
@@ -32,38 +31,49 @@ const PInput = ({
   tabIndex,
   rows,
 }: EBInputType) => {
-  const { register } = useFormContext();
+  const { control } = useFormContext();
+
   return (
-    <div className="grid w-full items-center gap-3">
-      <Label className="flex gap-2 items-center">
-        {icon}
-        {label}
-      </Label>
-      {type === "textarea" ? (
-        <textarea
-          {...register(name)}
-          rows={rows || 4}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
-          readOnly={readOnly}
-          tabIndex={tabIndex}
-          className={`resize-none border border-input bg-background px-3 py-2 rounded-md text-sm shadow-sm ${
-            className || ""
-          }`}
-        />
-      ) : (
-        <Input
-          {...register(name)}
-          type={type}
-          size={size}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
-          readOnly={readOnly}
-          tabIndex={tabIndex}
-          className={className || ""}
-        />
+    <Controller
+      name={name}
+      control={control}
+      defaultValue={defaultValue || ""}
+      render={({ field, fieldState }) => (
+        <Form.Item
+          label={
+            label && (
+              <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                {icon}
+                {label}
+              </span>
+            )
+          }
+          validateStatus={fieldState.invalid ? "error" : ""}
+          help={fieldState.error?.message}
+          className={className}
+        >
+          {type === "textarea" ? (
+            <Input.TextArea
+              {...field}
+              rows={rows || 4}
+              placeholder={placeholder}
+              readOnly={readOnly}
+              tabIndex={tabIndex}
+            />
+          ) : (
+            <Input
+              {...field}
+              type={type}
+              size={size === 1 ? "small" : size === 3 ? "large" : "middle"}
+              placeholder={placeholder}
+              readOnly={readOnly}
+              tabIndex={tabIndex}
+              prefix={icon}
+            />
+          )}
+        </Form.Item>
       )}
-    </div>
+    />
   );
 };
 

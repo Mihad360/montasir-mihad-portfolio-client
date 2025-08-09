@@ -129,11 +129,11 @@ export default function Navbar() {
           {/* Actions */}
           <div className="flex items-center space-x-2">
             {/* Tech Stack Icons */}
-            <div className="hidden md:flex items-center space-x-1 mr-2">
+            {/* <div className="hidden md:flex items-center space-x-1 mr-2">
               <div className="p-1.5 rounded-full bg-foreground/5">
                 <Code className="h-4 w-4 text-primary" />
               </div>
-            </div>
+            </div> */}
 
             {/* Theme Toggle */}
             {mounted && (

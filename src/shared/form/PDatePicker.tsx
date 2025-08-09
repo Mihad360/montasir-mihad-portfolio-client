@@ -2,58 +2,37 @@
 
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Select, Form } from "antd";
+import { DatePicker, Form } from "antd";
+import dayjs from "dayjs";
 
-type TSelectOption = {
-  label: string;
-  value: string;
-};
-
-type TEBSelect = {
-  options: TSelectOption[];
+type EBDatePickerProps = {
   name: string;
   label?: string;
   disabled?: boolean;
-  placeholder?: string;
-  className?: string;
   defaultValue?: string;
 };
 
-const PSelect = ({
-  options,
-  name,
-  label,
-  disabled,
-  placeholder,
-  className,
-  defaultValue,
-}: TEBSelect) => {
+const PDatePicker = ({ name, label, disabled, defaultValue }: EBDatePickerProps) => {
   const { control } = useFormContext();
 
   return (
     <Controller
       name={name}
       control={control}
-      defaultValue={defaultValue || ""}
+      defaultValue={defaultValue ? dayjs(defaultValue) : null}
       render={({ field, fieldState }) => (
         <Form.Item
           label={label}
           validateStatus={fieldState.invalid ? "error" : ""}
           help={fieldState.error?.message}
-          className={className}
         >
-          <Select
+          <DatePicker
             {...field}
-            onChange={field.onChange}
+            onChange={(date) => field.onChange(date)}
             value={field.value}
             disabled={disabled}
-            placeholder={placeholder || "Select"}
-            options={options}
-            allowClear
             style={{ width: "100%" }}
-            getPopupContainer={(trigger) =>
-              trigger.parentElement || document.body
-            }
+            format="YYYY-MM-DD"
           />
         </Form.Item>
       )}
@@ -61,4 +40,4 @@ const PSelect = ({
   );
 };
 
-export default PSelect;
+export default PDatePicker;
