@@ -40,20 +40,23 @@ const PInput = ({
       defaultValue={defaultValue || ""}
       render={({ field, fieldState }) => (
         <Form.Item
+          className="flex flex-col gap-1" // flex column layout
           label={
             label && (
-              <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span className="flex items-center gap-2 text-white">
                 {icon}
                 {label}
               </span>
             )
           }
+          labelCol={{ span: 24 }} // make label full width
+          wrapperCol={{ span: 24 }} // make input full width
           validateStatus={fieldState.invalid ? "error" : ""}
           help={fieldState.error?.message}
-          className={className}
         >
           {type === "textarea" ? (
             <Input.TextArea
+              className={className}
               {...field}
               rows={rows || 4}
               placeholder={placeholder}
@@ -62,6 +65,7 @@ const PInput = ({
             />
           ) : (
             <Input
+              className={className}
               {...field}
               type={type}
               size={size === 1 ? "small" : size === 3 ? "large" : "middle"}

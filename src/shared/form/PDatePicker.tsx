@@ -10,9 +10,16 @@ type EBDatePickerProps = {
   label?: string;
   disabled?: boolean;
   defaultValue?: string;
+  className?: string;
 };
 
-const PDatePicker = ({ name, label, disabled, defaultValue }: EBDatePickerProps) => {
+const PDatePicker = ({
+  name,
+  label,
+  disabled,
+  defaultValue,
+  className,
+}: EBDatePickerProps) => {
   const { control } = useFormContext();
 
   return (
@@ -22,16 +29,25 @@ const PDatePicker = ({ name, label, disabled, defaultValue }: EBDatePickerProps)
       defaultValue={defaultValue ? dayjs(defaultValue) : null}
       render={({ field, fieldState }) => (
         <Form.Item
-          label={label}
+          label={
+            label && (
+              <span className="flex items-center gap-2 text-white">
+                {label}
+              </span>
+            )
+          }
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+          className={`${className || ""} flex flex-col`}
           validateStatus={fieldState.invalid ? "error" : ""}
           help={fieldState.error?.message}
         >
           <DatePicker
+            className="w-full"
             {...field}
             onChange={(date) => field.onChange(date)}
             value={field.value}
             disabled={disabled}
-            style={{ width: "100%" }}
             format="YYYY-MM-DD"
           />
         </Form.Item>

@@ -6,7 +6,7 @@ import { Select, Form } from "antd";
 
 type TSelectOption = {
   label: string;
-  value: string;
+  value: string | boolean;
 };
 
 type TEBSelect = {
@@ -37,10 +37,19 @@ const PSelect = ({
       defaultValue={defaultValue || ""}
       render={({ field, fieldState }) => (
         <Form.Item
-          label={label}
+          label={
+            label && (
+              <span className="flex items-center gap-2 text-white">
+                {label}
+              </span>
+            )
+          }
+          labelCol={{ span: 24 }} // Full width label
+          wrapperCol={{ span: 24 }} // Full width input
+          style={{ color: "white" }}
           validateStatus={fieldState.invalid ? "error" : ""}
           help={fieldState.error?.message}
-          className={className}
+          className={`${className || ""} flex flex-col`}
         >
           <Select
             {...field}

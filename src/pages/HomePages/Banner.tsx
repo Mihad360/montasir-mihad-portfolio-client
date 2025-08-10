@@ -4,10 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import { useState, useEffect } from "react";
 import { AuroraText } from "@/components/reUse/AnimateText";
-import {
-  Terminal,
-  TypingAnimation,
-} from "@/components/reUse/Terminal";
+import { Terminal, TypingAnimation } from "@/components/reUse/Terminal";
 import { ShimmerButton } from "@/components/reUse/ShimmerButton";
 
 const Banner = () => {

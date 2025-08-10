@@ -11,6 +11,14 @@
   font-style: auto;
 }
 
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 .bg_color{
     background-color: #0D0C0B;
 }

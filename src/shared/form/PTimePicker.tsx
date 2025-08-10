@@ -30,10 +30,18 @@ const PTimePicker = ({
       defaultValue={defaultValue ? dayjs(defaultValue, format) : null}
       render={({ field, fieldState }) => (
         <Form.Item
-          label={label}
+          label={
+            label && (
+              <span className="flex items-center gap-2 text-white">
+                {label}
+              </span>
+            )
+          }
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
           validateStatus={fieldState.invalid ? "error" : ""}
           help={fieldState.error?.message}
-          className={className}
+          className={`${className || ""} flex flex-col`}
         >
           <TimePicker
             {...field}
