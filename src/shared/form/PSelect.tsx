@@ -53,16 +53,28 @@ const PSelect = ({
         >
           <Select
             {...field}
-            onChange={field.onChange}
-            value={field.value}
-            disabled={disabled}
-            placeholder={placeholder || "Select"}
-            options={options}
             allowClear
-            style={{ width: "100%" }}
-            getPopupContainer={(trigger) =>
-              trigger.parentElement || document.body
+            disabled={disabled}
+            placeholder={placeholder}
+            options={options}
+            style={{
+              width: "100%",
+            }}
+            onChange={(value) => field.onChange(value)}
+            getPopupContainer={(triggerNode) =>
+              triggerNode.parentElement || document.body
             }
+            styles={{
+              popup: {
+                root: {
+                  backgroundColor: "#1e1e1e",
+                  color: "#fff",
+                  border: "1px solid #333",
+                  borderRadius: "8px",
+                },
+              },
+            }}
+            className="custom-dark-select"
           />
         </Form.Item>
       )}

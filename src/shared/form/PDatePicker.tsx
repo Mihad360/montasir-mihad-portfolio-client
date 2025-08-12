@@ -22,6 +22,18 @@ const PDatePicker = ({
 }: EBDatePickerProps) => {
   const { control } = useFormContext();
 
+  const darkFieldStyle: React.CSSProperties = {
+    backgroundColor: "#1e1e1e",
+    border: "1px solid #333",
+    color: "#fff",
+    borderRadius: "8px",
+    padding: "8px 12px",
+    transition: "all 0.2s ease",
+  };
+
+  const darkFieldFocus = "#666"; // focus border color
+  const darkFieldBlur = "#333"; // blur border color
+
   return (
     <Controller
       name={name}
@@ -49,6 +61,9 @@ const PDatePicker = ({
             value={field.value}
             disabled={disabled}
             format="YYYY-MM-DD"
+            style={darkFieldStyle}
+            onFocus={(e) => (e.target.style.borderColor = darkFieldFocus)}
+            onBlur={(e) => (e.target.style.borderColor = darkFieldBlur)}
           />
         </Form.Item>
       )}

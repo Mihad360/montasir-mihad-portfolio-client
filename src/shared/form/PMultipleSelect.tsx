@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Select, Form } from "antd";
@@ -41,7 +40,7 @@ const PSelectMultiple = ({
         <Form.Item
           label={
             label && (
-              <span className="flex items-center gap-2 text-white">
+              <span className="flex items-center gap-2 text-white m-0">
                 {label}
               </span>
             )
@@ -59,11 +58,24 @@ const PSelectMultiple = ({
             disabled={disabled}
             placeholder={placeholder}
             options={options}
-            style={{ width: "100%" }}
+            style={{
+              width: "100%",
+            }}
             onChange={(value) => field.onChange(value)}
             getPopupContainer={(triggerNode) =>
               triggerNode.parentElement || document.body
             }
+            styles={{
+              popup: {
+                root: {
+                  backgroundColor: "#1e1e1e",
+                  color: "#fff",
+                  border: "1px solid #333",
+                  borderRadius: "8px",
+                },
+              },
+            }}
+            className="custom-dark-select"
           />
         </Form.Item>
       )}

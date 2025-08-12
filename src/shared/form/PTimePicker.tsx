@@ -23,6 +23,18 @@ const PTimePicker = ({
   const { control } = useFormContext();
   const format = "HH:mm";
 
+  const darkFieldStyle: React.CSSProperties = {
+    backgroundColor: "#1e1e1e",
+    border: "1px solid #333",
+    color: "#fff",
+    borderRadius: "8px",
+    padding: "8px 12px",
+    transition: "all 0.2s ease",
+  };
+
+  const darkFieldFocus = "#666"; // focus border color
+  const darkFieldBlur = "#333"; // blur border color
+
   return (
     <Controller
       name={name}
@@ -47,11 +59,13 @@ const PTimePicker = ({
             {...field}
             format={format}
             size="middle"
-            style={{ width: "100%" }}
+            style={darkFieldStyle}
             disabled={disabled}
             onChange={(time) => field.onChange(time)}
             value={field.value}
             placeholder={label ? `Enter your ${label}` : undefined}
+            onFocus={(e) => (e.target.style.borderColor = darkFieldFocus)}
+            onBlur={(e) => (e.target.style.borderColor = darkFieldBlur)}
           />
         </Form.Item>
       )}

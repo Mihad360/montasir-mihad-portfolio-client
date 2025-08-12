@@ -10,6 +10,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import type { FieldValues } from "react-hook-form";
 import { useState } from "react";
 import { Star } from "lucide-react";
+import PInputExpand from "@/shared/form/PInputExpand";
 
 const categoryOptions = [
   { label: "Full Stack", value: "Full Stack" },
@@ -70,7 +71,7 @@ export default function AddProjectPage() {
         <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 shadow-lg">
           <PForm onSubmit={onSubmit}>
             {/* Basic Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-">
               <div className="space-y-5">
                 <PInput
                   name="title"
@@ -127,7 +128,7 @@ export default function AddProjectPage() {
             </div>
 
             {/* Project Details */}
-            <div className="grid grid-cols-1 gap-6 mb-8">
+            <div className="grid grid-cols-1">
               <PInput
                 name="brief"
                 type="textarea"
@@ -141,9 +142,13 @@ export default function AddProjectPage() {
                 className=" border-gray-600 focus:border-blue-500 focus:ring-blue-500 text-white placeholder-gray-400"
               />
             </div>
+            <div className="">
+              <PInputExpand name="keyFeatures" label="Key Features" />
+              <PInputExpand name="keyFeatures" label="Key Features" />
+            </div>
 
             {/* Image Upload */}
-            <div className="mb-8">
+            <div className="mb-5">
               <label className="block mb-3 text-gray-300 font-medium">
                 Project Images (Max 6)
               </label>
@@ -167,19 +172,19 @@ export default function AddProjectPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <PInput
                 name="githubClient"
-                type="url"
+                type="text"
                 label="GitHub Client"
                 className=" border-gray-600 focus:border-blue-500 focus:ring-blue-500 text-white placeholder-gray-400"
               />
               <PInput
                 name="githubServer"
-                type="url"
+                type="text"
                 label="GitHub Server"
                 className=" border-gray-600 focus:border-blue-500 focus:ring-blue-500 text-white placeholder-gray-400"
               />
               <PInput
                 name="liveUrl"
-                type="url"
+                type="text"
                 label="Live URL"
                 className=" border-gray-600 focus:border-blue-500 focus:ring-blue-500 text-white placeholder-gray-400"
               />
@@ -191,9 +196,12 @@ export default function AddProjectPage() {
                 type="primary"
                 htmlType="submit"
                 size="large"
-                className="px-12 h-11 bg-blue-600 hover:bg-blue-500 border-none text-white font-medium transition-colors"
+                className="px-10 h-12 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 
+             hover:from-blue-500 hover:via-blue-400 hover:to-blue-300
+             shadow-md hover:shadow-lg border-none text-white font-semibold tracking-wide
+             transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
               >
-                Submit Project
+                🚀 Submit Project
               </Button>
             </div>
           </PForm>

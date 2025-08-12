@@ -104,6 +104,7 @@ export const projectsData = [
     team: 1,
     stars: 98,
     featured: false,
+    addedDate: '2025-04-12'
   },
   {
     id: 3,
