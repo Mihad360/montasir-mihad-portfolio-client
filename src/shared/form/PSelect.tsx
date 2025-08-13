@@ -57,9 +57,6 @@ const PSelect = ({
             disabled={disabled}
             placeholder={placeholder}
             options={options}
-            style={{
-              width: "100%",
-            }}
             onChange={(value) => field.onChange(value)}
             getPopupContainer={(triggerNode) =>
               triggerNode.parentElement || document.body
@@ -71,10 +68,16 @@ const PSelect = ({
                   color: "#fff",
                   border: "1px solid #333",
                   borderRadius: "8px",
+                  width: "100%",
                 },
               },
             }}
             className="custom-dark-select"
+            classNames={{
+              popup: {
+                root: "custom-dark-select-dropdown",
+              },
+            }}
           />
         </Form.Item>
       )}

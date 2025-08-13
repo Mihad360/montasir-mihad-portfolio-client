@@ -165,9 +165,9 @@ const AboutProfessionalSection = () => {
       </div>
 
       {/* Fun Facts and GitHub Row */}
-      <div className="flex flex-col md:flex-row gap-4">
+      {/* <div className="flex flex-col md:flex-row gap-4"> */}
         {/* Fun Facts */}
-        <motion.div
+        {/* <motion.div
           className="md:w-[40%]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -190,7 +190,7 @@ const AboutProfessionalSection = () => {
               </motion.li>
             ))}
           </ul>
-        </motion.div>
+        </motion.div> */}
 
         {/* GitHub Stats */}
         <motion.div
@@ -206,7 +206,7 @@ const AboutProfessionalSection = () => {
             <p className="text-sm mb-4">
               I&apos;ve contributed to over 50+ repositories with a focus on
               open-source projects. My most used languages are JavaScript and
-              Python.
+              TypeScript.
             </p>
             <div className="">
               <img
@@ -217,7 +217,7 @@ const AboutProfessionalSection = () => {
             </div>
           </div>
         </motion.div>
-      </div>
+      {/* </div> */}
     </div>
   );
 };

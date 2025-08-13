@@ -13,10 +13,11 @@ const ProjectCard = ({
   project: any;
   theme: string | undefined;
 }) => {
+
   return (
     <Link
-      href={`/projects/${project?.id}`}
-      key={project?.id}
+      href={`/projects/${project?._id}`}
+      key={project?._id}
       className="bg-[#181A1E] border-none transition-all duration-300 hover:transform group/card overflow-hidden rounded-xl"
     >
       <MagicCard gradientColor={theme === "dark" ? "#3A3A3A" : "#D9D9D955"}>
@@ -29,10 +30,7 @@ const ProjectCard = ({
             <Image
               width={600}
               height={600}
-              src={
-                project?.image ||
-                "https://images.unsplash.com/photo-1559827260-dc66d52bef19?q=80&w=2070&auto=format&fit=crop"
-              }
+              src={project?.images?.[0] || project?.images?.[1]}
               alt={project?.title}
               className="w-full h-48 object-cover rounded-xl transition-transform duration-500"
             />
@@ -81,24 +79,6 @@ const ProjectCard = ({
                 ))}
             </div>
           </div>
-
-          {/* Action Buttons */}
-          {/* <div className="flex gap-2 pt-2 pb-5">
-            <Button
-              size="sm"
-              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
-              asChild
-            >
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Live Demo
-              </a>
-            </Button>
-          </div> */}
         </div>
       </MagicCard>
     </Link>

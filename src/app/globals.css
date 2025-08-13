@@ -49,6 +49,23 @@
   color: #fff !important;
 }
 
+/* Dark dropdown background */
+.custom-dark-select-dropdown {
+  background-color: #1e1e1e !important; /* dropdown bg */
+  color: #fff !important; /* dropdown text */
+}
+
+/* Make individual items white */
+.custom-dark-select-dropdown .ant-select-item-option-content {
+  color: #fff !important;
+}
+
+/* Optional: selected item text in input box */
+.custom-dark-select .ant-select-selection-item {
+  color: #fff;
+}
+
+
 
 
 @theme inline {

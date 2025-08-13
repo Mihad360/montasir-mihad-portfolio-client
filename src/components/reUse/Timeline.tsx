@@ -145,12 +145,18 @@ export const TimelineCard = ({
   title,
   description,
   imageUrl,
+  liveLink,
+  primaryAction,
+  secondaryAction,
+  id,
 }: {
   title: string;
   description: string;
   imageUrl: string;
+  liveLink: string;
   primaryAction: string;
   secondaryAction: string;
+  id: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, {
@@ -253,19 +259,21 @@ export const TimelineCard = ({
 
         <motion.div
           variants={contentVariants}
-          className="px-6 pb-6 space-x-4 flex"
+          className="px-6 pb-6 space-x-4 flex items-center"
         >
-          <ShimmerButton className="shadow-2xl">
-            <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
-              Live Link
-            </span>
-          </ShimmerButton>
-          <Link href="/about">
+          <Link href={liveLink} target="_blank">
+            <ShimmerButton className="shadow-2xl">
+              <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
+                {primaryAction}
+              </span>
+            </ShimmerButton>
+          </Link>
+          <Link href={`/projects/${id}`}>
             <Button
               variant="secondary"
               className="border border-[#06B6D4] text-white hover:bg-[#06B6D4] hover:text-white transition-all duration-300 ease-in-out shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
             >
-              <Eye /> See Details
+              <Eye /> {secondaryAction}
             </Button>
           </Link>
         </motion.div>

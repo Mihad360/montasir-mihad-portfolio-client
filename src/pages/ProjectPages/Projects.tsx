@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Search, Filter, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -11,31 +12,42 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTheme } from "next-themes";
-import { projectsData, technologyOptions } from "@/utils/constant/project";
+import { technologyOptions } from "@/utils/constant/project";
 import ProjectCard from "./ProjectCard";
+import { useGetProjectsQuery } from "@/lib/redux/api/projectApi";
+import Loading from "@/shared/Loading";
+import { useForm } from "react-hook-form";
+import { useDebounce } from "@/hooks/debounce";
 
 const Projects = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const { register, watch, setValue } = useForm();
+  const searchTerm = useDebounce(watch("search"));
   const [selectedTechnology, setSelectedTechnology] = useState("all");
-  const [isClient, setIsClient] = useState(false);
   const { theme } = useTheme();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  // Build query parameters
+  const queryParams = [];
+  if (searchTerm && searchTerm.trim() !== "") {
+    queryParams.push({ name: "searchTerm", value: searchTerm.trim() });
+  }
+  if (selectedTechnology && selectedTechnology !== "all") {
+    queryParams.push({ name: "technologies", value: selectedTechnology });
+  }
+
+  const {
+    data: allProjects,
+    isLoading,
+    isFetching,
+  } = useGetProjectsQuery(queryParams.length ? queryParams : undefined);
+  const projects = allProjects?.data;
 
   const clearFilters = () => {
-    setSearchTerm("");
-    setSelectedTechnology("");
+    setSelectedTechnology("all");
+    setValue("search", "");
   };
 
-  if (!isClient) {
-    // Return a simple loading state or null during SSR
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-6">
-        <div className="max-w-7xl mx-auto">Loading...</div>
-      </div>
-    );
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -54,18 +66,23 @@ const Projects = () => {
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                 <Input
+                  {...register("search")}
                   type="text"
                   placeholder="Search by title, description, or technology..."
-                  className="pl-9 cursor-pointer border border-gray-600 focus-visible:ring-0 focus-visible:border-gray-500 text-white placeholder:text-gray-500"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-9 border border-gray-600 focus-visible:ring-0 focus-visible:border-gray-500 text-white placeholder:text-gray-500"
                 />
+                {searchTerm && (
+                  <X
+                    className="absolute right-3 top-3 h-4 w-4 text-gray-400 cursor-pointer hover:text-red-500"
+                    onClick={() => setValue("search", "")}
+                  />
+                )}
               </div>
             </div>
             <div>
               <Select
                 value={selectedTechnology}
-                onValueChange={setSelectedTechnology}
+                onValueChange={(value) => setSelectedTechnology(value)}
               >
                 <SelectTrigger className="border-gray-600 text-white focus-visible:ring-0 cursor-pointer">
                   <div className="flex items-center gap-2">
@@ -74,9 +91,15 @@ const Projects = () => {
                   </div>
                 </SelectTrigger>
                 <SelectContent className="bg-[#181A1E] border-none z-10 border-gray-600 text-white">
+                  <SelectItem
+                    className="cursor-pointer hover:bg-white/20"
+                    value="all"
+                  >
+                    All Technologies
+                  </SelectItem>
                   {technologyOptions.map((option) => (
                     <SelectItem
-                      className="cursor-pointer  hover:bg-white/20"
+                      className="cursor-pointer hover:bg-white/20"
                       key={option.value}
                       value={option.value}
                     >
@@ -100,12 +123,40 @@ const Projects = () => {
           </div>
         </div>
 
+        {/* Loading state during search/filter */}
+        {isFetching && (
+          <div className="flex justify-center items-center h-40">
+            <Loading />
+          </div>
+        )}
+
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projectsData.map((project) => (
-            <ProjectCard project={project} theme={theme} key={project.id} />
-          ))}
-        </div>
+        {!isFetching && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projects?.length > 0 ? (
+              projects.map((project: any) => (
+                <ProjectCard
+                  project={project}
+                  theme={theme}
+                  key={project._id}
+                />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <p className="text-gray-400 text-lg">
+                  No projects found matching your criteria
+                </p>
+                <Button
+                  variant="ghost"
+                  className="mt-4 text-rose-500 hover:text-rose-400"
+                  onClick={clearFilters}
+                >
+                  Clear filters
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

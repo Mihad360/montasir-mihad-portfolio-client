@@ -2,7 +2,7 @@
 import { Button, Form, Input } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import { useFormContext, useFieldArray, Controller } from "react-hook-form";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 
 export type PInputExpandProps = {
   name: string;
@@ -34,6 +34,13 @@ const PInputExpand = ({
     control,
     name,
   });
+
+  // Always show at least one input
+  useEffect(() => {
+    if (fields.length === 0) {
+      append(defaultValue || "");
+    }
+  }, [fields, append, defaultValue]);
 
   const baseStyle: React.CSSProperties = {
     backgroundColor: "#1e1e1e",
@@ -96,12 +103,15 @@ const PInputExpand = ({
             )}
           />
 
-          <Button
-            danger
-            type="text"
-            icon={<MinusCircleOutlined />}
-            onClick={() => remove(index)}
-          />
+          {/* Only allow removing if more than 1 field exists */}
+          {fields.length > 1 && (
+            <Button
+              danger
+              type="text"
+              icon={<MinusCircleOutlined />}
+              onClick={() => remove(index)}
+            />
+          )}
         </div>
       ))}
 

@@ -104,7 +104,7 @@ export const projectsData = [
     team: 1,
     stars: 98,
     featured: false,
-    addedDate: '2025-04-12'
+    addedDate: "2025-04-12",
   },
   {
     id: 3,
@@ -278,4 +278,32 @@ export const technologyOptions = [
   { label: "PostgreSQL", value: "PostgreSQL" },
   { label: "Firebase", value: "Firebase" },
   { label: "React Native", value: "React Native" },
+];
+
+export const categoryOptions = [
+  { label: "Full Stack", value: "Full Stack" },
+  { label: "Frontend", value: "Frontend" },
+  { label: "Backend", value: "Backend" },
+];
+
+export const statusOptions = [
+  { label: "Completed", value: "Completed" },
+  { label: "Ongoing", value: "Ongoing" },
+  { label: "Pending", value: "Pending" },
+];
+
+export const yesNoOptions = [
+  { label: "Yes", value: true },
+  { label: "No", value: false },
+];
+
+export const techOptions = [
+  { label: "React", value: "React" },
+  { label: "Node.js", value: "Node.js" },
+  { label: "MongoDB", value: "MongoDB" },
+  { label: "Tailwind CSS", value: "Tailwind CSS" },
+  { label: "TypeScript", value: "TypeScript" },
+  { label: "Next.js", value: "Next.js" },
+  { label: "Express.js", value: "Express.js" },
+  { label: "PostgreSQL", value: "PostgreSQL" },
 ];

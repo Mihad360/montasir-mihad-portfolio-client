@@ -7,11 +7,11 @@ import {
 } from "@reduxjs/toolkit/query/react";
 
 const rawBaseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_BASE_URL,
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
 const baseQuery = async (args: any, api: BaseQueryApi, extraOptions: any) => {
-  console.log("[baseApi] Request args:", args);
+  // console.log("[baseApi] Request args:", args);
 
   const result = await rawBaseQuery(args, api, extraOptions);
 
@@ -27,5 +27,6 @@ const baseQuery = async (args: any, api: BaseQueryApi, extraOptions: any) => {
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery,
+  tagTypes: ["project"],
   endpoints: () => ({}),
 });

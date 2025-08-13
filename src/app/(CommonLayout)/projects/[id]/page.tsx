@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import type React from "react";
 import { useState } from "react";
@@ -21,45 +22,26 @@ import {
 import { Github, Globe, Users, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
-import { projectsData } from "@/utils/constant/project";
+import { useGetEachProjectsQuery } from "@/lib/redux/api/projectApi";
+import Loading from "@/shared/Loading";
+import { IProject } from "@/utils/types/project.types";
 
-interface Project {
-  id: number;
-  title: string;
-  brief: string;
-  description: string[];
-  challenges: { title: string; description: string }[];
-  outcome: string;
-  keyFeatures: string[];
-  images: string[];
-  technologies: string[];
-  category: string;
-  status: string;
-  githubClient?: string;
-  githubServer?: string;
-  liveUrl?: string;
-  durationInDays: number;
-  isGroupProject: boolean;
-  team: number;
-  stars: number;
-  featured: boolean;
-}
-
-interface ProjectDetailProps {
-  project: Project;
-}
-
-const ProjectDetail: React.FC<ProjectDetailProps> = () => {
+const ProjectDetail = () => {
   const params = useParams();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const id = Number(params?.id);
-  const project = projectsData.find((pro) => pro.id === id);
+  const id = params?.id;
+  const { data: projects, isLoading } = useGetEachProjectsQuery(id);
+  const project : IProject = projects?.data;
 
   const primaryColor = "#06B6D4";
   const borderColor = "hsl(217.2 32.6% 17.5%)";
   const bgColor = "hsl(240 5.9% 10%)";
   const hoverBgColor = "hsl(240 3.7% 15.9%)";
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 md:py-24">
@@ -108,7 +90,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = () => {
             />
           </div>
           <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-            {project?.images.map((_, index) => (
+            {project?.images.map((_: any, index: number) => (
               <button
                 key={index}
                 onClick={() => setSelectedImageIndex(index)}
@@ -193,8 +175,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = () => {
                 {[0, 1, 2].map((colIndex) => (
                   <div key={colIndex} className="masonry-column w-1/3">
                     {project?.images
-                      .filter((_, index) => index % 3 === colIndex)
-                      .map((image, index) => {
+                      .filter((_: any, index: number) => index % 3 === colIndex)
+                      .map((image: any, index: number) => {
                         const actualIndex = colIndex + index * 3;
                         return (
                           <div
@@ -230,7 +212,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = () => {
               <CardTitle className="text-2xl text-gray-50">Overview</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-gray-300">
-              {project?.description.map((paragraph, index) => (
+              {project?.description.map((paragraph: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined, index: React.Key | null | undefined) => (
                 <p key={index}>{paragraph}</p>
               ))}
             </CardContent>
@@ -248,7 +230,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = () => {
             </CardHeader>
             <CardContent>
               <ul className="grid grid-cols-1 gap-2 text-gray-300 md:grid-cols-2">
-                {project?.keyFeatures.map((feature, index) => (
+                {project?.keyFeatures.map((feature: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined, index: React.Key | null | undefined) => (
                   <li key={index} className="flex items-center gap-2">
                     <span
                       className="text-xl"
@@ -273,7 +255,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = () => {
             </CardHeader>
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
-                {project?.challenges.map((challenge, index) => (
+                {project?.challenges.map((challenge: { title: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; description: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; }, index: React.Key | null | undefined) => (
                   <AccordionItem
                     key={index}
                     value={`item-${index}`}
@@ -322,7 +304,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = () => {
                   Technologies Used
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {project?.technologies.map((tech, index) => (
+                  {project?.technologies.map((tech: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined, index: React.Key | null | undefined) => (
                     <Badge
                       key={index}
                       variant="outline"
