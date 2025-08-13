@@ -9,7 +9,7 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
-import { Menu, X, Github, Linkedin, Mail, Sun, Moon, Code } from "lucide-react";
+import { Menu, X, Github, Linkedin, Mail, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 

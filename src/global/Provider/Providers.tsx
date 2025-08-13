@@ -8,11 +8,9 @@ import { store } from "@/lib/redux/store/store";
 const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      <div>
         <Provider store={store}>
           <AntdRegistry>{children}</AntdRegistry>
         </Provider>
-      </div>
     </>
   );
 };

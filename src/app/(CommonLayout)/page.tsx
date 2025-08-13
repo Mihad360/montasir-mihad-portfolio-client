@@ -1,7 +1,7 @@
-// "use client";
-import Banner from "@/pages/HomePages/Banner";
-import FeaturedProjects from "@/pages/HomePages/FeaturedProjects";
-import Skills from "@/pages/HomePages/Skill";
+"use client";
+import Banner from "@/components/HomePages/Banner";
+import FeaturedProjects from "@/components/HomePages/FeaturedProjects";
+import Skills from "@/components/HomePages/Skill";
 import React from "react";
 
 const MainPage = () => {

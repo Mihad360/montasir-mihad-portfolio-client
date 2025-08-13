@@ -47,14 +47,6 @@ const education = [
   },
 ];
 
-const funFacts = [
-  "I can solve a Rubik's cube in under 2 minutes",
-  "I've visited 10+ countries and love learning about different cultures",
-  "I'm a certified scuba diver",
-  "I once participated in a 24-hour hackathon and built a working prototype",
-  "I'm fluent in 3 languages",
-];
-
 const AboutProfessionalSection = () => {
   const container = {
     hidden: { opacity: 0 },
@@ -166,8 +158,8 @@ const AboutProfessionalSection = () => {
 
       {/* Fun Facts and GitHub Row */}
       {/* <div className="flex flex-col md:flex-row gap-4"> */}
-        {/* Fun Facts */}
-        {/* <motion.div
+      {/* Fun Facts */}
+      {/* <motion.div
           className="md:w-[40%]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -192,31 +184,30 @@ const AboutProfessionalSection = () => {
           </ul>
         </motion.div> */}
 
-        {/* GitHub Stats */}
-        <motion.div
-          className="z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <div className="p-4 rounded-xl h-full">
-            <h3 className="text-xl font-semibold mb-4 border-l-4 border-[#06B6D4] pl-4">
-              Coding Journey
-            </h3>
-            <p className="text-sm mb-4">
-              I&apos;ve contributed to over 50+ repositories with a focus on
-              open-source projects. My most used languages are JavaScript and
-              TypeScript.
-            </p>
-            <div className="">
-              <img
-                src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Mihad360&theme=react"
-                alt="GitHub Profile Summary"
-                className="rounded-lg shadow-lg w-full h-full"
-              />
-            </div>
+      {/* GitHub Stats */}
+      <motion.div
+        className="z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        <div className="p-4 rounded-xl h-full">
+          <h3 className="text-xl font-semibold mb-4 border-l-4 border-[#06B6D4] pl-4">
+            Coding Journey
+          </h3>
+          <p className="text-sm mb-4">
+            I&apos;ve contributed to over 50+ repositories with a focus on
+            open-source projects. My most used languages are JavaScript and
+            TypeScript.
+          </p>
+          <div className="">
+            <img
+              src="https://github-readme-activity-graph.vercel.app/graph?username=mihad360&bg_color=transparent&color=00b4d8&line=00b4d8&point=ffffff&area=true&hide_border=true"
+              alt="Contribution Graph"
+            />
           </div>
-        </motion.div>
+        </div>
+      </motion.div>
       {/* </div> */}
     </div>
   );

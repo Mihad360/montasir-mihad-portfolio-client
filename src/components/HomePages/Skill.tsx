@@ -1,36 +1,14 @@
 "use client";
-
+import { useGetSkillsQuery } from "@/lib/redux/api/skillApi";
+import Loading from "@/shared/Loading";
+import { ISkill } from "@/utils/types/project.types";
 import { motion, useAnimation, useInView, Variants } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
-import {
-  SiFigma,
-  SiApple,
-  SiAngular,
-  SiJavascript,
-  SiNextdotjs,
-  SiReact,
-  SiTypescript,
-  SiNodedotjs,
-  SiExpress,
-} from "react-icons/si";
-
-const skills = [
-  { name: "Figma", icon: SiFigma },
-  { name: "JavaScript", icon: SiJavascript },
-  { name: "React", icon: SiReact },
-  { name: "TypeScript", icon: SiTypescript },
-  { name: "Node", icon: SiNodedotjs },
-  { name: "Express", icon: SiExpress },
-  { name: "Next.js", icon: SiNextdotjs },
-  { name: "Apple", icon: SiApple },
-  { name: "Apple", icon: SiApple },
-  { name: "Angular", icon: SiAngular },
-  { name: "Angular", icon: SiAngular },
-  { name: "Angular", icon: SiAngular },
-  { name: "Angular", icon: SiAngular },
-];
 
 const Skills = () => {
+  const { data: skillsData, isLoading } = useGetSkillsQuery(undefined);
+  const skills = skillsData?.data;
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -51,8 +29,8 @@ const Skills = () => {
   }, [isInView, controls]);
 
   const skillChunks = [];
-  for (let i = 0; i < skills.length; i += 5) {
-    skillChunks.push(skills.slice(i, i + 5));
+  for (let i = 0; i < skills?.length; i += 5) {
+    skillChunks.push(skills?.slice(i, i + 5));
   }
 
   const containerVariants = {
@@ -65,7 +43,6 @@ const Skills = () => {
       },
     },
   };
-
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -77,7 +54,6 @@ const Skills = () => {
       },
     },
   };
-
   const marqueeVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -85,6 +61,10 @@ const Skills = () => {
       transition: { duration: 0.5, delay: 0.5 },
     },
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="pb-12" ref={ref}>
@@ -144,7 +124,7 @@ const Skills = () => {
                   },
                 }}
               >
-                {skills.map((skill, index) => (
+                {skills.map((skill: ISkill, index: number) => (
                   <span
                     key={`${loopIndex}-${index}`}
                     className="mx-8 inline-flex items-center"
@@ -173,26 +153,34 @@ const Skills = () => {
               className="flex gap-6 justify-center"
               variants={itemVariants}
             >
-              {chunk.map((skill, i) => (
-                <motion.div
+              {chunk.map((skill: ISkill, i: number) => (
+                <Link
+                  href={skill.websiteLink}
+                  target="_blank"
                   key={i}
-                  whileTap={{ scale: 0.95 }}
-                  className="group w-44 h-32 flex flex-col items-center justify-center 
+                >
+                  <motion.div
+                    whileTap={{ scale: 0.95 }}
+                    className="group w-44 h-32 flex flex-col items-center justify-center 
                     bg-[#1C1E22] hover:bg-[#181A1E] shadow-gray-800 shadow-lg overflow-hidden relative 
                     transition-all duration-300 ease-in-out cursor-pointer rounded-lg"
-                  whileHover={{
-                    y: -5,
-                    transition: { duration: 0.2, ease: "easeOut" },
-                  }}
-                >
-                  {/* Skill Icon */}
-                  <div className="relative z-10 flex flex-col items-center justify-center">
-                    <skill.icon className="text-3xl text-white mb-1 group-hover:text-[#06B6D4] transition-colors duration-300" />
-                    <span className="text-xs font-medium text-white/90 group-hover:text-[#06B6D4] tracking-wide mt-1 transition-colors duration-300">
-                      {skill.name}
-                    </span>
-                  </div>
-                </motion.div>
+                    whileHover={{
+                      y: -5,
+                      transition: { duration: 0.2, ease: "easeOut" },
+                    }}
+                  >
+                    {/* Skill Icon */}
+                    <div className="relative z-10 flex flex-col items-center justify-center">
+                      <div
+                        className="w-16 h-16"
+                        dangerouslySetInnerHTML={{ __html: skill.icon }}
+                      />
+                      <span className="text-sm font-medium text-[#06B6D4]group-hover:text-white tracking-wide mt-1 transition-colors duration-300">
+                        {skill.name}
+                      </span>
+                    </div>
+                  </motion.div>
+                </Link>
               ))}
             </motion.div>
           ))}

@@ -67,7 +67,7 @@ export default function AddProjectPage() {
           </h1>
         </div>
 
-        <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 shadow-lg">
+        <div className="p-6">
           <PForm onSubmit={onSubmit}>
             {/* Basic Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-">

@@ -26,3 +26,12 @@ export interface IProject {
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
 }
+
+export interface ISkill {
+  name: string;
+  websiteLink: string;
+  icon: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  isDeleted: boolean;
+}

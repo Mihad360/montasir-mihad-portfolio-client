@@ -17,10 +17,9 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { Lens } from "./Lens";
-import AnimateButton from "./AnimateButton";
-import { ExternalLink, Eye } from "lucide-react";
 import Link from "next/link";
 import { ShimmerButton } from "./ShimmerButton";
+import { Eye } from "lucide-react";
 
 interface TimelineEntry {
   title: string;

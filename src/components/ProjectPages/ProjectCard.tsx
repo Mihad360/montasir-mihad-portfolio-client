@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { MagicCard } from "@/components/reUse/MagicCard";
 import { Badge } from "@/components/ui/badge";
 import { CardDescription, CardTitle } from "@/components/ui/card";
@@ -13,7 +14,6 @@ const ProjectCard = ({
   project: any;
   theme: string | undefined;
 }) => {
-
   return (
     <Link
       href={`/projects/${project?._id}`}

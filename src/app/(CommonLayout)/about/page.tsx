@@ -1,5 +1,5 @@
-import AboutBanner from "@/pages/AboutPages/AboutBanner";
-import AboutProfessionalSection from "@/pages/AboutPages/AboutProfessionalSection";
+import AboutBanner from "@/components/AboutPages/AboutBanner";
+import AboutProfessionalSection from "@/components/AboutPages/AboutProfessionalSection";
 
 import React from "react";
 
