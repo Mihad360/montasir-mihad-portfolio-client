@@ -5,6 +5,7 @@ import { ISkill } from "@/utils/types/project.types";
 import { motion, useAnimation, useInView, Variants } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 const Skills = () => {
   const { data: skillsData, isLoading } = useGetSkillsQuery(undefined);
@@ -12,6 +13,7 @@ const Skills = () => {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { theme } = useTheme();
 
   // Initial load animation with delay
   useEffect(() => {
@@ -67,9 +69,11 @@ const Skills = () => {
   }
 
   return (
-    <div className="pb-12" ref={ref}>
+    <div className={`pb-12 ${theme === "dark" ? "" : "bg-gray-200"}`} ref={ref}>
       <motion.h2
-        className="text-xl text-center md:text-4xl text-white dark:text-white pt-12"
+        className={`text-xl text-center md:text-4xl pt-12 ${
+          theme === "dark" ? "text-white" : "text-gray-900"
+        }`}
         initial={{ opacity: 0, y: 20 }}
         animate={controls}
         variants={{
@@ -80,12 +84,26 @@ const Skills = () => {
           },
         }}
       >
-        <span className="text-white font-bold">Skills</span>{" "}
-        <span className="text-gray-500 font-medium">& Expertise</span>
+        <span
+          className={`${
+            theme === "dark" ? "text-white" : "text-gray-900"
+          } font-bold`}
+        >
+          Skills
+        </span>{" "}
+        <span
+          className={`${
+            theme === "dark" ? "text-gray-500" : "text-gray-600"
+          } font-medium`}
+        >
+          & Expertise
+        </span>
       </motion.h2>
 
       <motion.p
-        className="text-neutral-500 text-center dark:text-neutral-300 text-sm md:text-base"
+        className={`text-center text-sm md:text-base ${
+          theme === "dark" ? "text-neutral-500" : "text-gray-600"
+        }`}
         initial={{ opacity: 0, y: 10 }}
         animate={controls}
         variants={{
@@ -100,7 +118,11 @@ const Skills = () => {
         timeline of my journey.
       </motion.p>
 
-      <div className="relative py-5 pt-20 overflow-hidden flex items-center justify-center">
+      <div
+        className={`relative py-5 pt-20 overflow-hidden flex items-center justify-center ${
+          theme === "dark" ? "" : "bg-gray-200"
+        }`}
+      >
         {/* Smooth Infinite Marquee - Now properly animated */}
         <motion.div
           className="absolute w-full h-12 -rotate-3 top-1/2 -translate-y-1/2 overflow-hidden"
@@ -108,7 +130,11 @@ const Skills = () => {
           animate={controls}
           variants={marqueeVariants}
         >
-          <div className="whitespace-nowrap flex items-center h-full border-t-2 border-b-2 border-white/20">
+          <div
+            className={`whitespace-nowrap flex items-center h-full border-t-2 border-b-2 ${
+              theme === "dark" ? "border-white/20" : "border-gray-300"
+            }`}
+          >
             {[...Array(4)].map((_, loopIndex) => (
               <motion.div
                 key={loopIndex}
@@ -129,8 +155,18 @@ const Skills = () => {
                     key={`${loopIndex}-${index}`}
                     className="mx-8 inline-flex items-center"
                   >
-                    <span className="text-red-400">•</span>
-                    <span className="ml-2 text-white/70 text-xl font-medium tracking-wider">
+                    <span
+                      className={`${
+                        theme === "dark" ? "text-red-400" : "text-red-500"
+                      }`}
+                    >
+                      •
+                    </span>
+                    <span
+                      className={`ml-2 text-xl font-medium tracking-wider ${
+                        theme === "dark" ? "text-white/70" : "text-gray-700"
+                      }`}
+                    >
                       {skill.name.toUpperCase()}
                     </span>
                   </span>
@@ -154,16 +190,16 @@ const Skills = () => {
               variants={itemVariants}
             >
               {chunk.map((skill: ISkill, i: number) => (
-                <Link
-                  href={skill.websiteLink}
-                  target="_blank"
-                  key={i}
-                >
+                <Link href={skill.websiteLink} target="_blank" key={i}>
                   <motion.div
                     whileTap={{ scale: 0.95 }}
-                    className="group w-44 h-32 flex flex-col items-center justify-center 
-                    bg-[#1C1E22] hover:bg-[#181A1E] shadow-gray-800 shadow-lg overflow-hidden relative 
-                    transition-all duration-300 ease-in-out cursor-pointer rounded-lg"
+                    className={`group w-44 h-32 flex flex-col items-center justify-center 
+                    shadow-lg overflow-hidden relative transition-all duration-300 ease-in-out 
+                    cursor-pointer rounded-lg ${
+                      theme === "dark"
+                        ? "bg-[#1C1E22] hover:bg-[#181A1E] shadow-gray-800"
+                        : "bg-gray-700 hover:bg-gray-800 shadow-gray-400"
+                    }`}
                     whileHover={{
                       y: -5,
                       transition: { duration: 0.2, ease: "easeOut" },
@@ -175,7 +211,13 @@ const Skills = () => {
                         className="w-16 h-16"
                         dangerouslySetInnerHTML={{ __html: skill.icon }}
                       />
-                      <span className="text-sm font-medium text-[#06B6D4]group-hover:text-white tracking-wide mt-1 transition-colors duration-300">
+                      <span
+                        className={`text-sm font-medium tracking-wide mt-1 transition-colors duration-300 ${
+                          theme === "dark"
+                            ? "text-[#06B6D4] group-hover:text-white"
+                            : "text-[#06B6D4] group-hover:text-gray-100"
+                        }`}
+                      >
                         {skill.name}
                       </span>
                     </div>

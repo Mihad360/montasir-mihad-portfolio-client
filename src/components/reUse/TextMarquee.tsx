@@ -8,20 +8,21 @@ import {
   useSpring,
   useTransform,
   useVelocity,
-} from "motion/react";
+} from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
-
 import { cn } from "@/lib/utils";
 
 interface VelocityScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   defaultVelocity?: number;
   className?: string;
   numRows?: number;
+  textColor?: string; // Add textColor prop
 }
 
 interface ParallaxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   baseVelocity: number;
+  textColor?: string; // Add textColor prop
 }
 
 export const wrap = (min: number, max: number, v: number) => {
@@ -32,6 +33,7 @@ export const wrap = (min: number, max: number, v: number) => {
 function ParallaxText({
   children,
   baseVelocity = 100,
+  textColor = "white", // Default to white
   ...props
 }: ParallaxProps) {
   const baseX = useMotionValue(0);
@@ -91,7 +93,11 @@ function ParallaxText({
     >
       <motion.div className="inline-block" style={{ x }}>
         {Array.from({ length: repetitions }).map((_, i) => (
-          <span key={i} ref={i === 0 ? textRef : null}>
+          <span
+            key={i}
+            ref={i === 0 ? textRef : null}
+            style={{ color: textColor }} // Apply text color
+          >
             {children}{" "}
           </span>
         ))}
@@ -105,13 +111,14 @@ export function VelocityScroll({
   numRows = 2,
   children,
   className,
+  textColor = "white", // Default to white
   ...props
 }: VelocityScrollProps) {
   return (
     <div
       className={cn(
         "relative w-full text-3xl font-bold tracking-[-0.02em] md:text-4xl md:leading-[3rem]",
-        className,
+        className
       )}
       {...props}
     >
@@ -119,6 +126,7 @@ export function VelocityScroll({
         <ParallaxText
           key={i}
           baseVelocity={defaultVelocity * (i % 2 === 0 ? 1 : -1)}
+          textColor={textColor} // Pass textColor to ParallaxText
         >
           {children}
         </ParallaxText>

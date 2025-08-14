@@ -269,15 +269,13 @@ export const projectsData = [
 
 export const technologyOptions = [
   { label: "All Technologies", value: "all" },
-  { label: "React", value: "React" },
-  { label: "Next.js", value: "Next.js" },
-  { label: "Node.js", value: "Node.js" },
-  { label: "Python", value: "Python" },
+  { label: "React", value: "React js" },
+  { label: "Next.js", value: "Next js" },
+  { label: "Node.js", value: "Node js" },
   { label: "TypeScript", value: "TypeScript" },
   { label: "MongoDB", value: "MongoDB" },
   { label: "PostgreSQL", value: "PostgreSQL" },
   { label: "Firebase", value: "Firebase" },
-  { label: "React Native", value: "React Native" },
 ];
 
 export const categoryOptions = [

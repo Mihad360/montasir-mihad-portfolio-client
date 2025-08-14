@@ -1,8 +1,8 @@
 "use client";
-
+import React, { useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-import { motion, MotionProps } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { motion, MotionProps } from "framer-motion";
 
 interface AnimatedSpanProps extends MotionProps {
   children: React.ReactNode;
@@ -47,10 +47,7 @@ export const TypingAnimation = ({
     throw new Error("TypingAnimation: children must be a string. Received:");
   }
 
-  const MotionComponent = motion.create(Component, {
-    forwardMotionProps: true,
-  });
-
+  const MotionComponent = motion(Component);
   const [displayedText, setDisplayedText] = useState<string>("");
   const [started, setStarted] = useState(false);
   const elementRef = useRef<HTMLElement | null>(null);
@@ -94,14 +91,20 @@ export const TypingAnimation = ({
 interface TerminalProps {
   children: React.ReactNode;
   className?: string;
+  lightMode?: boolean;
 }
 
-export const Terminal = ({ children, className }: TerminalProps) => {
+export const Terminal = ({
+  children,
+  className,
+  lightMode = false,
+}: TerminalProps) => {
+  const { theme } = useTheme();
+  const isLightMode = lightMode || theme === "light";
   const terminalRef = useRef<HTMLDivElement>(null);
 
   const handleCopy = () => {
     if (terminalRef.current) {
-      // Get all text content except the copy button text
       const content = Array.from(
         terminalRef.current.querySelectorAll("pre code")
       )
@@ -111,7 +114,6 @@ export const Terminal = ({ children, className }: TerminalProps) => {
       navigator.clipboard
         .writeText(content)
         .then(() => {
-          // Optional: Add some feedback that content was copied
           console.log("Content copied to clipboard");
         })
         .catch((err) => {
@@ -123,12 +125,20 @@ export const Terminal = ({ children, className }: TerminalProps) => {
   return (
     <div
       className={cn(
-        "z-10 h-full max-h-[400px] w-full max-w-lg rounded-xl border border-white/20 bg-background",
+        "z-10 h-full max-h-[400px] w-full max-w-lg rounded-xl",
+        isLightMode
+          ? "border border-gray-200 bg-gray-50/80 backdrop-blur-sm"
+          : "border border-white/20 bg-white/10 backdrop-blur-sm",
         className
       )}
       ref={terminalRef}
     >
-      <div className="flex flex-col gap-y-2 border-b border-white/20 p-4">
+      <div
+        className={cn(
+          "flex flex-col gap-y-2 p-4",
+          isLightMode ? "border-b border-gray-200" : "border-b border-white/20"
+        )}
+      >
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row gap-x-2">
             <div className="h-2 w-2 rounded-full bg-red-500"></div>
@@ -137,7 +147,12 @@ export const Terminal = ({ children, className }: TerminalProps) => {
           </div>
           <button
             onClick={handleCopy}
-            className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-1 rounded hover:bg-accent"
+            className={cn(
+              "transition-colors cursor-pointer p-1 rounded",
+              isLightMode
+                ? "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
+                : "text-gray-400 hover:text-white hover:bg-white/10"
+            )}
             aria-label="Copy terminal content"
           >
             <svg
@@ -157,8 +172,15 @@ export const Terminal = ({ children, className }: TerminalProps) => {
           </button>
         </div>
       </div>
-      <pre className="p-4 overflow-y-auto overflow-x-hidden">
-        <code className="grid gap-y-1 break-words whitespace-pre-wrap">{children}</code>
+      <pre
+        className={cn(
+          "p-4 overflow-y-auto overflow-x-hidden",
+          isLightMode ? "text-gray-800" : "text-gray-100"
+        )}
+      >
+        <code className="grid gap-y-1 break-words whitespace-pre-wrap">
+          {children}
+        </code>
       </pre>
     </div>
   );

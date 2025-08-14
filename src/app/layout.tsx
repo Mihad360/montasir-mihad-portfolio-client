@@ -15,9 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-arp="" suppressHydrationWarning>
-      <body className={` font antialiased`} cz-shortcut-listen="true">
+      <body className={`font antialiased`} cz-shortcut-listen="true">
         <Providers>
-          <ThemeProvider defaultTheme="dark">{children}</ThemeProvider>
+          {children}
         </Providers>
       </body>
     </html>

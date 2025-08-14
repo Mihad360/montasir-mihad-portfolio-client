@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaLinkedin, FaFacebook, FaEnvelope } from "react-icons/fa";
 import profileImg from "../../public/IMG_20250524_165515.jpg";
+import { useTheme } from "next-themes";
 
 const Footer = () => {
+  const { theme } = useTheme();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -29,7 +31,9 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className=" text-gray-300 py-16 px-4 sm:px-6 lg:px-8"
+      className={`py-16 px-4 sm:px-6 lg:px-8 ${
+        theme === "dark" ? "text-gray-300" : "text-gray-700 bg-gray-200"
+      }`}
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -45,7 +49,11 @@ const Footer = () => {
               width={50}
               height={50}
             />
-            <h3 className="text-lg font-semibold text-white mb-3 mt-2">
+            <h3
+              className={`text-lg font-semibold mb-3 mt-2 ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            >
               Montasir Mihad
             </h3>
             <p className="text-sm">
@@ -56,14 +64,20 @@ const Footer = () => {
 
           {/* Quick Links */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-semibold text-white mb-4">
+            <h3
+              className={`text-lg font-semibold mb-4 ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            >
               Quick Links
             </h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/about"
-                  className="hover:text-teal-400 transition-colors"
+                  className={`hover:text-teal-400 transition-colors ${
+                    theme === "dark" ? "" : "hover:text-teal-600"
+                  }`}
                 >
                   About
                 </Link>
@@ -71,7 +85,9 @@ const Footer = () => {
               <li>
                 <Link
                   href="/projects"
-                  className="hover:text-teal-400 transition-colors"
+                  className={`hover:text-teal-400 transition-colors ${
+                    theme === "dark" ? "" : "hover:text-teal-600"
+                  }`}
                 >
                   Projects
                 </Link>
@@ -79,7 +95,9 @@ const Footer = () => {
               <li>
                 <Link
                   href="/contact"
-                  className="hover:text-teal-400 transition-colors"
+                  className={`hover:text-teal-400 transition-colors ${
+                    theme === "dark" ? "" : "hover:text-teal-600"
+                  }`}
                 >
                   Contact
                 </Link>
@@ -87,7 +105,9 @@ const Footer = () => {
               <li>
                 <Link
                   href="/blog"
-                  className="hover:text-teal-400 transition-colors"
+                  className={`hover:text-teal-400 transition-colors ${
+                    theme === "dark" ? "" : "hover:text-teal-600"
+                  }`}
                 >
                   Blog
                 </Link>
@@ -97,13 +117,23 @@ const Footer = () => {
 
           {/* Connect */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-semibold text-white mb-4">Connect</h3>
+            <h3
+              className={`text-lg font-semibold mb-4 ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            >
+              Connect
+            </h3>
             <div className="flex space-x-4">
               <a
                 href="https://github.com/yourusername"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className={`transition-colors ${
+                  theme === "dark"
+                    ? "text-gray-400 hover:text-white"
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
               >
                 <FaGithub size={24} />
               </a>
@@ -111,7 +141,11 @@ const Footer = () => {
                 href="https://linkedin.com/in/yourusername"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className={`transition-colors ${
+                  theme === "dark"
+                    ? "text-gray-400 hover:text-white"
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
               >
                 <FaLinkedin size={24} />
               </a>
@@ -119,13 +153,21 @@ const Footer = () => {
                 href="https://facebook.com/yourusername"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className={`transition-colors ${
+                  theme === "dark"
+                    ? "text-gray-400 hover:text-white"
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
               >
                 <FaFacebook size={24} />
               </a>
               <a
                 href="mailto:your.email@example.com"
-                className="text-gray-400 hover:text-white transition-colors"
+                className={`transition-colors ${
+                  theme === "dark"
+                    ? "text-gray-400 hover:text-white"
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
               >
                 <FaEnvelope size={24} />
               </a>
@@ -134,7 +176,11 @@ const Footer = () => {
 
           {/* Tech Stack */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-semibold text-white mb-4">
+            <h3
+              className={`text-lg font-semibold mb-4 ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            >
               Tech Stack
             </h3>
             <ul className="text-sm space-y-1">
@@ -148,7 +194,9 @@ const Footer = () => {
 
         {/* Copyright */}
         <motion.div
-          className="border-t border-gray-800 mt-8 pt-8 text-center text-sm"
+          className={`border-t mt-8 pt-8 text-center text-sm ${
+            theme === "dark" ? "border-gray-800" : "border-gray-200"
+          }`}
           variants={itemVariants}
         >
           <p>

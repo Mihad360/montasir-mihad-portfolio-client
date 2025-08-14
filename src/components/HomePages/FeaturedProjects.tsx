@@ -3,9 +3,11 @@ import { Timeline, TimelineCard } from "@/components/reUse/Timeline";
 import { useGetProjectsQuery } from "@/lib/redux/api/projectApi";
 import Loading from "@/shared/Loading";
 import { IProject } from "@/utils/types/project.types";
+import { useTheme } from "next-themes";
 import React from "react";
 
 function FeaturedProjects() {
+  const { theme } = useTheme();
   const { data: allProjects, isLoading } = useGetProjectsQuery(undefined);
   const projects = allProjects?.data;
 
@@ -32,18 +34,24 @@ function FeaturedProjects() {
     })) || [];
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {isLoading ? (
-        <div>
-          <Loading />
-        </div>
-      ) : timelineData.length > 0 ? (
-        <Timeline data={timelineData} />
-      ) : (
-        <p className="text-center text-gray-500">
-          No featured projects available.
-        </p>
-      )}
+    <div
+      className={`${
+        theme === "dark" ? "text-white" : "bg-gray-200 text-gray-900"
+      }`}
+    >
+      <div className="max-w-5xl mx-auto">
+        {isLoading ? (
+          <div>
+            <Loading />
+          </div>
+        ) : timelineData.length > 0 ? (
+          <Timeline data={timelineData} />
+        ) : (
+          <p className="text-center text-gray-500">
+            No featured projects available.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

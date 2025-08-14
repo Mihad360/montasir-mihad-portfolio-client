@@ -6,11 +6,13 @@ import { useState, useEffect } from "react";
 import { AuroraText } from "@/components/reUse/AnimateText";
 import { Terminal, TypingAnimation } from "@/components/reUse/Terminal";
 import { ShimmerButton } from "@/components/reUse/ShimmerButton";
+import { useTheme } from "next-themes";
 
 const Banner = () => {
   const text = "SCROLL TO EXPLORE -";
   const letters = text.split("");
   const [isMounted, setIsMounted] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
@@ -62,13 +64,21 @@ const Banner = () => {
 
   return (
     <motion.div
-      className="relative overflow-hidden pb-16 pt-32"
+      className={`relative overflow-hidden pb-16 pt-32 ${
+        theme === "dark" ? "text-white" : "bg-gray-200 text-gray-900"
+      }`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] max-w-7xl mx-auto mt-16"></div>
+      <div
+        className={`absolute inset-0 z-0 ${
+          theme === "dark"
+            ? "bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)]"
+            : "bg-[linear-gradient(to_right,#0000000a_1px,transparent_1px),linear-gradient(to_bottom,#0000000a_1px,transparent_1px)]"
+        } bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] max-w-7xl mx-auto mt-16`}
+      ></div>
 
       {/* Main Content Container */}
       <div className="max-w-5xl mx-auto">
@@ -96,8 +106,15 @@ const Banner = () => {
                   Creating Solutions for Development Process
                 </h2>
               </motion.div>
-              <ShimmerButton className="shadow-2xl">
-                <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
+              <ShimmerButton
+                className="shadow-2xl"
+                lightMode={theme !== "dark"}
+              >
+                <span
+                  className={`whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight ${
+                    theme === "dark" ? "text-white" : "text-gray-900"
+                  } lg:text-lg`}
+                >
                   Download Resume
                 </span>
               </ShimmerButton>
@@ -105,12 +122,21 @@ const Banner = () => {
 
             {/* Right Column - Terminal */}
             <div className="w-full lg:w-[45%] xl:w-[40%] z-10">
-              <Terminal className="bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+              <Terminal
+                className={`${
+                  theme === "dark"
+                    ? "bg-white/10 backdrop-blur-sm border border-white/20"
+                    : "bg-gray-100/80 backdrop-blur-sm border border-gray-200"
+                } shadow-lg`}
+                lightMode={theme !== "dark"}
+              >
                 <div className="flex items-center">
                   <span>&gt; const </span>
                   <TypingAnimation
                     delay={1500}
-                    className="text-pink-500 font-bold"
+                    className={`${
+                      theme === "dark" ? "text-pink-500" : "text-pink-600"
+                    } font-bold`}
                   >
                     Montasir Mihad
                   </TypingAnimation>
@@ -118,7 +144,13 @@ const Banner = () => {
                 </div>
 
                 <div className="flex items-center">
-                  <span className="pl-4 text-blue-600">pronouns:</span>
+                  <span
+                    className={`pl-4 ${
+                      theme === "dark" ? "text-blue-400" : "text-blue-600"
+                    }`}
+                  >
+                    pronouns:
+                  </span>
                   <TypingAnimation
                     delay={2000}
                     className="pl-2 text--400 inline"
@@ -128,7 +160,13 @@ const Banner = () => {
                 </div>
 
                 <div className="flex items-center">
-                  <span className="pl-4 text-blue-600">location:</span>
+                  <span
+                    className={`pl-4 ${
+                      theme === "dark" ? "text-blue-400" : "text-blue-600"
+                    }`}
+                  >
+                    location:
+                  </span>
                   <TypingAnimation
                     delay={2500}
                     className="pl-2 text--400 inline"
@@ -138,7 +176,13 @@ const Banner = () => {
                 </div>
 
                 <div className="flex items-center">
-                  <span className="pl-4 text-blue-600">role:</span>
+                  <span
+                    className={`pl-4 ${
+                      theme === "dark" ? "text-blue-400" : "text-blue-600"
+                    }`}
+                  >
+                    role:
+                  </span>
                   <TypingAnimation
                     delay={3000}
                     className="pl-2 text--400 inline"
@@ -148,7 +192,13 @@ const Banner = () => {
                 </div>
 
                 <div className="flex items-start">
-                  <span className="pl-4 text-blue-600">specialization:</span>
+                  <span
+                    className={`pl-4 ${
+                      theme === "dark" ? "text-blue-400" : "text-blue-600"
+                    }`}
+                  >
+                    specialization:
+                  </span>
                   <TypingAnimation
                     delay={3500}
                     className="pl-2 text--400 inline"
@@ -158,7 +208,13 @@ const Banner = () => {
                 </div>
 
                 <div className="flex items-start">
-                  <span className="pl-4 text-blue-600">currentFocus:</span>
+                  <span
+                    className={`pl-4 ${
+                      theme === "dark" ? "text-blue-400" : "text-blue-600"
+                    }`}
+                  >
+                    currentFocus:
+                  </span>
                   <TypingAnimation
                     delay={4000}
                     className="pl-2 text--400 inline"
@@ -169,7 +225,13 @@ const Banner = () => {
                 </div>
 
                 <div className="flex items-start">
-                  <span className="pl-4 text-blue-600">funFact:</span>
+                  <span
+                    className={`pl-4 ${
+                      theme === "dark" ? "text-blue-400" : "text-blue-600"
+                    }`}
+                  >
+                    funFact:
+                  </span>
                   <TypingAnimation
                     delay={4500}
                     className="pl-2 text--400 inline"
@@ -204,7 +266,9 @@ const Banner = () => {
             {letters.map((letter, index) => (
               <motion.span
                 key={index}
-                className="absolute text-white text-sm font-medium tracking-wider"
+                className={`absolute text-sm font-medium tracking-wider ${
+                  theme === "dark" ? "text-white" : "text-gray-900"
+                }`}
                 style={{
                   left: "50%",
                   top: "50%",
@@ -227,32 +291,40 @@ const Banner = () => {
 
           {/* Center Arrow */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <ChevronDown className="w-6 h-6 text-white" />
+            <ChevronDown
+              className={`w-6 h-6 ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            />
           </div>
         </motion.div>
       </div>
 
       {/* Gradient Background Elements */}
-      <motion.div
-        className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] rounded-full absolute bottom-0 left-0 md:block hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      />
+      {theme === "dark" && (
+        <>
+          <motion.div
+            className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] rounded-full absolute bottom-0 left-0 md:block hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.2 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          />
 
-      <motion.div
-        className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] rounded-full absolute bottom-[30%] left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
-        transition={{ duration: 1, delay: 0.7 }}
-      />
+          <motion.div
+            className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] rounded-full absolute bottom-[30%] left-1/2 transform -translate-x-1/2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.2 }}
+            transition={{ duration: 1, delay: 0.7 }}
+          />
 
-      <motion.div
-        className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] rounded-full absolute top-0 right-0 md:block hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
-        transition={{ duration: 1, delay: 0.9 }}
-      />
+          <motion.div
+            className="w-[300px] h-[300px] bg-gradient-to-br from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6] blur-[60px] rounded-full absolute top-0 right-0 md:block hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.2 }}
+            transition={{ duration: 1, delay: 0.9 }}
+          />
+        </>
+      )}
     </motion.div>
   );
 };
