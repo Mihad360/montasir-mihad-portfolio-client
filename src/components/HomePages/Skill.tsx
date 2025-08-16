@@ -1,88 +1,55 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useGetSkillsQuery } from "@/lib/redux/api/skillApi";
 import Loading from "@/shared/Loading";
 import { ISkill } from "@/utils/types/project.types";
-import { motion, useAnimation, useInView, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 
 const Skills = () => {
+  const { theme } = useTheme();
   const { data: skillsData, isLoading } = useGetSkillsQuery(undefined);
   const skills = skillsData?.data;
-  const controls = useAnimation();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { theme } = useTheme();
+  const [showContent, setShowContent] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [chunkSize, setChunkSize] = useState(5); // Default to desktop size
 
-  // Initial load animation with delay
   useEffect(() => {
-    const timer = setTimeout(() => {
-      controls.start("visible");
-    }, 500); // 0.5 second delay on page load
-    return () => clearTimeout(timer);
-  }, [controls]);
+    setIsMounted(true);
+    const timer = setTimeout(() => setShowContent(true), 300);
 
-  // Scroll-triggered animation
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [isInView, controls]);
+    const handleResize = () => {
+      setChunkSize(window.innerWidth < 768 ? 3 : 5);
+    };
 
+    // Set initial size
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // Create skill chunks for responsive layout
   const skillChunks = [];
-  for (let i = 0; i < skills?.length; i += 5) {
-    skillChunks.push(skills?.slice(i, i + 5));
+  for (let i = 0; i < skills?.length; i += chunkSize) {
+    skillChunks.push(skills?.slice(i, i + chunkSize));
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 0.1,
-      },
-    },
-  };
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-  const marqueeVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { duration: 0.5, delay: 0.5 },
-    },
-  };
-
-  if (isLoading) {
+  if (!isMounted || isLoading || !showContent) {
     return <Loading />;
   }
 
   return (
-    <div className={`pb-12 ${theme === "dark" ? "" : "bg-gray-200"}`} ref={ref}>
-      <motion.h2
+    <div className={`pb-12 ${theme === "dark" ? "" : "bg-gray-200"}`}>
+      <h2
         className={`text-xl text-center md:text-4xl pt-12 ${
           theme === "dark" ? "text-white" : "text-gray-900"
         }`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={controls}
-        variants={{
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5, delay: 0.2 },
-          },
-        }}
       >
         <span
           className={`${
@@ -98,121 +65,160 @@ const Skills = () => {
         >
           & Expertise
         </span>
-      </motion.h2>
+      </h2>
 
-      <motion.p
+      <p
         className={`text-center text-sm md:text-base ${
           theme === "dark" ? "text-neutral-500" : "text-gray-600"
         }`}
-        initial={{ opacity: 0, y: 10 }}
-        animate={controls}
-        variants={{
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5, delay: 0.3 },
-          },
-        }}
       >
-        I&apos;ve been working on Aceternity for the past 2 years. Here&apos;s a
-        timeline of my journey.
-      </motion.p>
+        I've been working on Aceternity for the past 2 years. Here's a timeline
+        of my journey.
+      </p>
 
       <div
         className={`relative py-5 pt-20 overflow-hidden flex items-center justify-center ${
           theme === "dark" ? "" : "bg-gray-200"
         }`}
       >
-        {/* Smooth Infinite Marquee - Now properly animated */}
-        <motion.div
-          className="absolute w-full h-12 -rotate-3 top-1/2 -translate-y-1/2 overflow-hidden"
-          initial="hidden"
-          animate={controls}
-          variants={marqueeVariants}
-        >
-          <div
-            className={`whitespace-nowrap flex items-center h-full border-t-2 border-b-2 ${
-              theme === "dark" ? "border-white/20" : "border-gray-300"
-            }`}
-          >
-            {[...Array(4)].map((_, loopIndex) => (
-              <motion.div
-                key={loopIndex}
-                className="inline-flex items-center"
-                animate={{
-                  x: ["0%", "-100%"],
-                }}
-                transition={{
-                  x: {
-                    repeat: Infinity,
-                    duration: 20,
-                    ease: "linear",
-                  },
-                }}
-              >
-                {skills.map((skill: ISkill, index: number) => (
-                  <span
-                    key={`${loopIndex}-${index}`}
-                    className="mx-8 inline-flex items-center"
-                  >
-                    <span
-                      className={`${
-                        theme === "dark" ? "text-red-400" : "text-red-500"
-                      }`}
-                    >
-                      •
-                    </span>
-                    <span
-                      className={`ml-2 text-xl font-medium tracking-wider ${
-                        theme === "dark" ? "text-white/70" : "text-gray-700"
-                      }`}
-                    >
-                      {skill.name.toUpperCase()}
-                    </span>
-                  </span>
-                ))}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Consistent Skill Circles */}
-        <motion.div
-          className="flex flex-col gap-8 z-10"
-          initial="hidden"
-          animate={controls}
-          variants={containerVariants}
-        >
-          {skillChunks.map((chunk, chunkIndex) => (
+        {/* Desktop/Tab Marquee (rotated) - hidden on mobile */}
+        {skills && skills.length > 0 && (
+          <>
+            {/* Mobile Marquee (straight, at top) */}
             <motion.div
-              key={chunkIndex}
-              className="flex gap-6 justify-center"
-              variants={itemVariants}
+              className="absolute w-full h-10 top-4 md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              {chunk.map((skill: ISkill, i: number) => (
-                <Link href={skill.websiteLink} target="_blank" key={i}>
+              <div
+                className={`whitespace-nowrap flex items-center h-full border-t-2 border-b-2 ${
+                  theme === "dark" ? "border-white/20" : "border-gray-500"
+                }`}
+              >
+                {[...Array(2)]?.map((_, loopIndex) => (
                   <motion.div
-                    whileTap={{ scale: 0.95 }}
-                    className={`group w-44 h-32 flex flex-col items-center justify-center 
-                    shadow-lg overflow-hidden relative transition-all duration-300 ease-in-out 
-                    cursor-pointer rounded-lg ${
-                      theme === "dark"
-                        ? "bg-[#1C1E22] hover:bg-[#181A1E] shadow-gray-800"
-                        : "bg-gray-700 hover:bg-gray-800 shadow-gray-400"
-                    }`}
-                    whileHover={{
-                      y: -5,
-                      transition: { duration: 0.2, ease: "easeOut" },
+                    key={`mobile-${loopIndex}`}
+                    className="inline-flex items-center"
+                    animate={{
+                      x: ["0%", "-100%"],
+                    }}
+                    transition={{
+                      x: {
+                        repeat: Infinity,
+                        duration: 20,
+                        ease: "linear",
+                      },
                     }}
                   >
-                    {/* Skill Icon */}
+                    {skills?.map((skill: ISkill, index: number) => (
+                      <span
+                        key={`mobile-${loopIndex}-${index}`}
+                        className="mx-4 inline-flex items-center"
+                      >
+                        <span
+                          className={`${
+                            theme === "dark" ? "text-red-400" : "text-red-500"
+                          }`}
+                        >
+                          •
+                        </span>
+                        <span
+                          className={`ml-2 text-sm font-medium tracking-wider ${
+                            theme === "dark" ? "text-white/70" : "text-gray-900"
+                          }`}
+                        >
+                          {skill.name.toUpperCase()}
+                        </span>
+                      </span>
+                    ))}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Desktop/Tablet Marquee (rotated) - hidden on mobile */}
+            <motion.div
+              className="absolute w-full h-12 -rotate-8 top-1/2 -translate-y-1/2 overflow-hidden hidden md:block"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div
+                className={`whitespace-nowrap flex items-center h-full border-t-2 border-b-2 ${
+                  theme === "dark" ? "border-white/20" : "border-gray-500"
+                }`}
+              >
+                {[...Array(4)]?.map((_, loopIndex) => (
+                  <motion.div
+                    key={`desktop-${loopIndex}`}
+                    className="inline-flex items-center"
+                    animate={{
+                      x: ["0%", "-100%"],
+                    }}
+                    transition={{
+                      x: {
+                        repeat: Infinity,
+                        duration: 20,
+                        ease: "linear",
+                      },
+                    }}
+                  >
+                    {skills?.map((skill: ISkill, index: number) => (
+                      <span
+                        key={`desktop-${loopIndex}-${index}`}
+                        className="mx-8 inline-flex items-center"
+                      >
+                        <span
+                          className={`${
+                            theme === "dark" ? "text-red-400" : "text-red-500"
+                          }`}
+                        >
+                          •
+                        </span>
+                        <span
+                          className={`ml-2 text-xl font-medium tracking-wider ${
+                            theme === "dark" ? "text-white/70" : "text-gray-900"
+                          }`}
+                        >
+                          {skill.name.toUpperCase()}
+                        </span>
+                      </span>
+                    ))}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </>
+        )}
+
+        {/* Skill Cards */}
+        <div className="flex flex-col gap-8 z-10 mt-10 md:mt-0">
+          {skillChunks?.map((chunk, chunkIndex) => (
+            <div
+              key={chunkIndex}
+              className="flex gap-6 justify-center flex-wrap"
+            >
+              {chunk?.map((skill: ISkill, i: number) => (
+                <Link href={skill.websiteLink} target="_blank" key={i}>
+                  <motion.div
+                    whileHover={{ y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`group w-32 h-28 md:w-44 md:h-32 flex flex-col items-center justify-center 
+                      shadow-lg overflow-hidden relative transition-all duration-300 ease-in-out 
+                      cursor-pointer rounded-lg ${
+                        theme === "dark"
+                          ? "bg-[#1C1E22] hover:bg-[#181A1E] shadow-gray-800"
+                          : "bg-gray-800 hover:bg-gray-900 shadow-gray-400"
+                      }`}
+                  >
                     <div className="relative z-10 flex flex-col items-center justify-center">
                       <div
-                        className="w-16 h-16"
+                        className="w-12 h-12 md:w-16 md:h-16"
                         dangerouslySetInnerHTML={{ __html: skill.icon }}
                       />
                       <span
-                        className={`text-sm font-medium tracking-wide mt-1 transition-colors duration-300 ${
+                        className={`text-xs md:text-sm font-medium tracking-wide mt-1 transition-colors duration-300 ${
                           theme === "dark"
                             ? "text-[#06B6D4] group-hover:text-white"
                             : "text-[#06B6D4] group-hover:text-gray-100"
@@ -224,9 +230,9 @@ const Skills = () => {
                   </motion.div>
                 </Link>
               ))}
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

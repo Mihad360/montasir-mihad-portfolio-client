@@ -73,7 +73,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
     >
       <motion.div
         className={`max-w-7xl mx-auto pt-16 px-4 md:px-8 lg:px-10 ${
-          theme === "dark" ? "" : "bg-gray-200"
+          theme === "dark" ? "text-white" : "bg-gray-200"
         }`}
         variants={container}
         initial="hidden"
@@ -130,7 +130,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             custom={index}
             transition={{ delay: index * 0.1 }}
           >
-            <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start w-[40%] pb-[200px]">
+            <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start md:w-[40%] pb-[200px]">
               <motion.h3
                 className={`hidden md:block text-xl md:text-5xl font-bold ${
                   theme === "dark" ? "text-neutral-500" : "text-gray-600"
@@ -144,8 +144,8 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             </div>
             <div className="relative w-full">
               <motion.h3
-                className={`md:hidden block text-2xl text-left font-bold ${
-                  theme === "dark" ? "text-neutral-500" : "text-gray-600"
+                className={`md:hidden pb-3 md:pb-0 block text-2xl text-left font-bold ${
+                  theme === "dark" ? "text-neutral-400" : "text-gray-600"
                 }`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

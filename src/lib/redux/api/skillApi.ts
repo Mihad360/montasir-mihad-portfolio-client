@@ -8,12 +8,14 @@ const skillApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["skill"],
     }),
     getSkills: build.query({
       query: () => ({
         url: "/skill/skills",
         method: "GET",
       }),
+      providesTags: ["skill"],
     }),
   }),
 });

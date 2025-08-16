@@ -5,9 +5,18 @@ import Link from "next/link";
 import { FaGithub, FaLinkedin, FaFacebook, FaEnvelope } from "react-icons/fa";
 import profileImg from "../../public/IMG_20250524_165515.jpg";
 import { useTheme } from "next-themes";
+import React from "react";
 
 const Footer = () => {
   const { theme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null; // Prevents rendering until theme is ready
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -32,13 +41,15 @@ const Footer = () => {
   return (
     <motion.footer
       className={`py-16 px-4 sm:px-6 lg:px-8 ${
-        theme === "dark" ? "text-gray-300" : "text-gray-700 bg-gray-200"
+        theme === "dark"
+          ? "text-gray-300"
+          : "bg-gray-200 text-gray-700"
       }`}
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto md:px-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About Section */}
           <motion.div variants={itemVariants}>
@@ -202,7 +213,7 @@ const Footer = () => {
           <p>
             © {new Date().getFullYear()} Montasir Mihad. All rights reserved.
           </p>
-          <p className="mt-2">Built with passion and Next js ❤️</p>
+          <p className="mt-2">Built with passion and Next.js ❤️</p>
         </motion.div>
       </div>
     </motion.footer>

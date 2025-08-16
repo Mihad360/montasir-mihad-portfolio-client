@@ -6,9 +6,21 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function ContactPage() {
+  const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    // Prevent SSR mismatch
+    return null;
+  }
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -36,7 +48,11 @@ export default function ContactPage() {
           transition={{ duration: 1.2, delay: 0.4, ease: "easeInOut" }}
         />
       )}
-      <div className={`${theme === "dark" ? "text-white" : " text-gray-900 bg-gray-200"}`}>
+      <div
+        className={`${
+          theme === "dark" ? "text-white" : " text-gray-900 bg-gray-200"
+        }`}
+      >
         <div
           className={`max-w-5xl mx-auto py-24 flex items-center justify-center relative`}
         >

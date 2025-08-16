@@ -125,7 +125,7 @@ export const Terminal = ({
   return (
     <div
       className={cn(
-        "z-10 h-full max-h-[400px] w-full max-w-lg rounded-xl",
+        "z-10 h-full max-h-[500px] w-full max-w-lg rounded-xl",
         isLightMode
           ? "border border-gray-200 bg-gray-50/80 backdrop-blur-sm"
           : "border border-white/20 bg-white/10 backdrop-blur-sm",

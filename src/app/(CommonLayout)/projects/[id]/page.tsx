@@ -49,7 +49,7 @@ const ProjectDetail = () => {
 
   return (
     <div className={`${theme === "dark" ? "" : "bg-gray-200"}`}>
-      <div className={`max-w-5xl mx-auto px-4 py-8 md:py-24`}>
+      <div className={`max-w-5xl mx-auto px-4 py-20 md:py-24`}>
         {/* Gradient Background Elements (Dark mode only) */}
         {theme === "dark" && (
           <>

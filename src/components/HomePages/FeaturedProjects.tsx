@@ -9,14 +9,19 @@ import React from "react";
 function FeaturedProjects() {
   const { theme } = useTheme();
   const { data: allProjects, isLoading } = useGetProjectsQuery(undefined);
-  const projects = allProjects?.data;
+  const [mounted, setMounted] = React.useState(false);
 
-  // Filter featured projects, take max 3
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const projects = allProjects?.data;
   const featuredProjects = projects
     ?.filter((p: IProject) => p.featured === true)
     ?.slice(0, 3);
 
-  // Map them to timelineData
   const timelineData =
     featuredProjects?.map((project: IProject) => ({
       title: project?.title || "",
@@ -35,19 +40,15 @@ function FeaturedProjects() {
 
   return (
     <div
-      className={`${
-        theme === "dark" ? "text-white" : "bg-gray-200 text-gray-900"
-      }`}
+      className={theme === "dark" ? "text-white" : "bg-gray-200 text-gray-900"}
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {isLoading ? (
-          <div>
-            <Loading />
-          </div>
+          <Loading />
         ) : timelineData.length > 0 ? (
           <Timeline data={timelineData} />
         ) : (
-          <p className="text-center text-gray-500">
+          <p className="text-center text-gray-500 py-10">
             No featured projects available.
           </p>
         )}

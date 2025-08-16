@@ -7,7 +7,10 @@ import {
 } from "@reduxjs/toolkit/query/react";
 
 const rawBaseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+  baseUrl:
+    process.env.NODE_ENV === "production"
+      ? process.env.NEXT_PUBLIC_SERVER_URL
+      : process.env.NEXT_PUBLIC_BASE_URL,
 });
 
 const baseQuery = async (args: any, api: BaseQueryApi, extraOptions: any) => {
