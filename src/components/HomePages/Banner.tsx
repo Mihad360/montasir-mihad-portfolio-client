@@ -58,7 +58,7 @@ const Banner = () => {
           {/* Hero Content - Stack on mobile, row on lg+ */}
           <div className="flex flex-col items-center lg:flex-row gap-6 md:gap-12">
             {/* Left Column - Text Content */}
-            <div className="flex-1 space-y-4 md:space-y-5 z-20">
+            <div className="flex-1 space-y-4 md:space-y-5 z-20 pl-4 md:pl-0">
               {/* Name Section - Adjusted text sizes */}
               <motion.div variants={item}>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-tight">
@@ -102,7 +102,7 @@ const Banner = () => {
             </div>
 
             {/* Right Column - Terminal - Full width on mobile, reduced on larger screens */}
-            <div className="w-full flex justify-center mt-8 md:mt-0 lg:w-[45%] xl:w-[40%] z-10">
+            <div className="w-full flex justify-center mt-8 md:mt-0 px-4 md:px-0 lg:w-[45%] xl:w-[40%] z-10">
               <Terminal
                 className={`${
                   theme === "dark"
