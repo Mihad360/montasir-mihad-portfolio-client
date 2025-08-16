@@ -52,7 +52,7 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       className={`fixed w-full mx-auto inset-x-0 z-50 rounded-xl sm:rounded-2xl 
-  transition-all duration-500 overflow-hidden
+  transition-all duration-500
   ${
     scrolled
       ? "bg-background/90 backdrop-blur-xl border border-white/20 shadow-lg sm:shadow-2xl shadow-primary/10 top-2 sm:top-3"
